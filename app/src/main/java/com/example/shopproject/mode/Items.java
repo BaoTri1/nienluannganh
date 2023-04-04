@@ -23,6 +23,8 @@ public class Items implements Serializable {
     private String _id;
     private int indexColor;
     private int indexSize;
+    private String color;
+    private String size;
 
     public Items() {}
 
@@ -35,6 +37,20 @@ public class Items implements Serializable {
         this._id = _id;
         this.indexColor = indexColor;
         this.indexSize = indexSize;
+    }
+
+    public Items(String slug, String name, int quantity, String image, int price, String _id,
+                 int indexColor, int indexSize, String color, String size) {
+        this.slug = slug;
+        this.name = name;
+        this.quantity = quantity;
+        this.image = image;
+        this.price = price;
+        this._id = _id;
+        this.indexColor = indexColor;
+        this.indexSize = indexSize;
+        this.color = color;
+        this.size = size;
     }
 
     public String getSlug() {
@@ -99,5 +115,21 @@ public class Items implements Serializable {
 
     public void setIndexSize(int indexSize) {
         this.indexSize = indexSize;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

@@ -9,6 +9,7 @@ public interface CartView {
     void DisplayListCartUdated(List<Items> list);
     void DisplaytotlalPrice(int total);
     void DisplayNumProduct(int num);
+    void DisplayQuantityError(String message);
     void DisplayNoNetWork(String message);
     void DisplayError(String message);
 }

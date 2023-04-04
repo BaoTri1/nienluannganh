@@ -78,14 +78,25 @@ public class BottomSheetPresenter implements CallbackProductMode {
         bottomSheetView.DisplayImgageDialog(this.product.getImage());
     }
 
-    public void addCart(int quantity, int indexColor, int indexSize){
+//    public void addCart(int quantity, int indexColor, int indexSize){
+//        String slug = this.product.getSlug();
+//        String name = this.product.getName();
+//        String image = this.product.getImage();
+//        int price = this.product.getPrice();
+//        String _id = this.product.get_id();
+//
+//        Items items = new Items(slug, name, quantity, image, price, _id, indexColor, indexSize);
+//        bottomSheetView.PassItemCart(items);
+//    }
+
+    public void addCart(int quantity, String color, String size, int indexColor, int indexSize){
         String slug = this.product.getSlug();
         String name = this.product.getName();
         String image = this.product.getImage();
         int price = this.product.getPrice();
         String _id = this.product.get_id();
 
-        Items items = new Items(slug, name, quantity, image, price, _id, indexColor, indexSize);
+        Items items = new Items(slug, name, quantity, image, price, _id, indexColor, indexSize, color, size);
         bottomSheetView.PassItemCart(items);
     }
 

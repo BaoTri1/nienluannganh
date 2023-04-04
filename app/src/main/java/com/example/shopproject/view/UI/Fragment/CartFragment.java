@@ -82,6 +82,10 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         });
 
+        btnXoaALL.setOnClickListener(view -> {
+            cartPresenter.deleteAllItems();
+        });
+
         return myView;
     }
 
@@ -133,12 +137,12 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         adapter = new CartAdapter(getActivity(), listItems, new clickListener() {
             @Override
             public void deleteItem(Items items) {
-                clickListener.super.deleteItem(items);
+                cartPresenter.deleteItemsCart(items);
             }
 
             @Override
             public void addYeuThich(Items items) {
-                clickListener.super.addYeuThich(items);
+                cartPresenter.addFavoriteProduct(items);
             }
 
             @Override
@@ -162,39 +166,45 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void DisplayListCartUdated(List<Items> list) {
-        layoutMuaSam.setVisibility(View.GONE);
-        layoutMain.setVisibility(View.VISIBLE);
-        if(adapter == null){
-            adapter = new CartAdapter(getActivity(), list, new clickListener() {
-                @Override
-                public void deleteItem(Items items) {
-                    clickListener.super.deleteItem(items);
-                }
+        if(list.isEmpty()){
+            layoutMuaSam.setVisibility(View.VISIBLE);
+            layoutMain.setVisibility(View.GONE);
+            return;
+        }else {
+            layoutMuaSam.setVisibility(View.GONE);
+            layoutMain.setVisibility(View.VISIBLE);
+            if(adapter == null){
+                adapter = new CartAdapter(getActivity(), list, new clickListener() {
+                    @Override
+                    public void deleteItem(Items items) {
+                        cartPresenter.deleteItemsCart(items);
+                    }
 
-                @Override
-                public void addYeuThich(Items items) {
-                    clickListener.super.addYeuThich(items);
-                }
+                    @Override
+                    public void addYeuThich(Items items) {
+                        cartPresenter.addFavoriteProduct(items);
+                    }
 
-                @Override
-                public void decrement(Items items) {
-                    cartPresenter.decrementQuantity(items);
-                }
+                    @Override
+                    public void decrement(Items items) {
+                        cartPresenter.decrementQuantity(items);
+                    }
 
-                @Override
-                public void increment(Items items) {
-                    clickListener.super.increment(items);
-                }
-            });
+                    @Override
+                    public void increment(Items items) {
+                        cartPresenter.incrementQuantity(items);
+                    }
+                });
 
-            LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-            rcv_giohang.setLayoutManager(manager);
-            rcv_giohang.addItemDecoration(new DividerItemDecoration(getActivity(), RecyclerView.VERTICAL));
-            rcv_giohang.setHasFixedSize(true);
-            rcv_giohang.setAdapter(adapter);
-        }
-        else {
-            adapter.setData(list);
+                LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                rcv_giohang.setLayoutManager(manager);
+                rcv_giohang.addItemDecoration(new DividerItemDecoration(getActivity(), RecyclerView.VERTICAL));
+                rcv_giohang.setHasFixedSize(true);
+                rcv_giohang.setAdapter(adapter);
+            }
+            else {
+                adapter.setData(list);
+            }
         }
     }
 
@@ -207,6 +217,23 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void DisplayNumProduct(int num) {
         txtSLGioHang.setText(num + " sản phẩm");
+    }
+
+    @Override
+    public void DisplayQuantityError(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Thông báo");
+        builder.setMessage(message);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 1500);
     }
 
     @Override

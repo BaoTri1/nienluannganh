@@ -67,7 +67,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         holder.txtNameSP.setText(items.getName());
 
-        holder.txtPhanLoaiSP.setVisibility(View.GONE);
+        if(items.getIndexColor() == -1){
+            holder.txtPhanLoaiSP.setVisibility(View.GONE);
+        }else {
+            if(items.getIndexSize() == -1){
+                holder.txtPhanLoaiSP.setText("Màu sắc: " + items.getColor());
+            }else {
+                holder.txtPhanLoaiSP.setText("Màu sắc: " + items.getColor() + ", Size: " + items.getSize());
+            }
+        }
 
         holder.txtGiaSP.setText(Publics.formatGia(items.getPrice()));
 

@@ -21,12 +21,16 @@ public class CartPresenter implements CallbackProductMode {
     private ProductInterator productInterator;
     private List<Items> mList;
     private int numberIncreased;
+    private int quantityUpdate;
+    private Items itemsTmp;
+    private boolean check;
 
     public CartPresenter(Context mContext, CartView cartView) {
         this.mContext = mContext;
         this.cartView = cartView;
         productInterator = new ProductInterator(mContext, this);
         mList = new ArrayList<>();
+        check = false;
     }
 
     public void getListCart(){
@@ -56,18 +60,37 @@ public class CartPresenter implements CallbackProductMode {
 
     public boolean checkItems(Items items){
         for(int i  = 0; i < this.mList.size(); i++){
-            if(Objects.equals(mList.get(i).get_id(), items.get_id()))
-                return true;
+            if(Objects.equals(mList.get(i).get_id(), items.get_id())) {
+                if (mList.get(i).getIndexColor() == items.getIndexColor()) {
+                    if (mList.get(i).getIndexSize() == items.getIndexSize()) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }
 
     public void updatequantity(Items items){
+        this.itemsTmp = items;
+        check = true;
         for(int i  = 0; i < this.mList.size(); i++){
             Log.e("Tri", "vong lap: " + i);
             if(mList.get(i).get_id().equals(items.get_id())) {
-                Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
-                mList.get(i).setQuantity(mList.get(i).getQuantity() + items.getQuantity());
+                if(mList.get(i).getIndexColor() == items.getIndexColor()){
+                    if(mList.get(i).getIndexSize() == items.getIndexSize()){
+                        this.quantityUpdate = mList.get(i).getQuantity() + items.getQuantity();
+                        if(items.getIndexColor() == -1){
+                            productInterator.getCountInStock(items.getSlug());
+                        }else {
+                            if(items.getIndexSize() == -1){
+                                productInterator.getCountColor(items.getSlug(), items.getIndexColor());
+                            }else {
+                                productInterator.getCountSize(items.getSlug(), items.getIndexColor(), items.getIndexSize());
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -84,14 +107,24 @@ public class CartPresenter implements CallbackProductMode {
         return toltal;
     }
 
+    public void deleteAllItems(){
+        this.mList.clear();
+        cartView.DisplaytotlalPrice(ToltalPrice(this.mList));
+        cartView.DisplayListCartUdated(mList);
+    }
+
     public void deleteItemsCart(Items items){
         this.mList.remove(items);
+        cartView.DisplaytotlalPrice(ToltalPrice(this.mList));
         cartView.DisplayListCartUdated(mList);
+        cartView.DisplayNumProduct(this.mList.size());
     }
 
     public void addFavoriteProduct(Items items){
         deleteItemsCart(items);
-        cartView.DisplayListCartUdated(mList);
+        cartView.DisplaytotlalPrice(ToltalPrice(this.mList));
+        cartView.DisplayListCartUdated(this.mList);
+        cartView.DisplayNumProduct(this.mList.size());
         Log.e("Tri", "đã thêm " + items.getName() + " vào yêu thích");
     }
 
@@ -101,23 +134,28 @@ public class CartPresenter implements CallbackProductMode {
         for(int i  = 0; i < this.mList.size(); i++){
             Log.e("Tri", "vong lap: " + i);
             if(mList.get(i).get_id().equals(items.get_id())) {
-                Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
-                mList.get(i).setQuantity(mList.get(i).getQuantity() - 1);
+                if(mList.get(i).getIndexColor() == items.getIndexColor()){
+                    if(mList.get(i).getIndexSize() == items.getIndexSize()){
+                        Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
+                        mList.get(i).setQuantity(mList.get(i).getQuantity() - 1);
+                    }
+                }
             }
         }
         cartView.DisplaytotlalPrice(ToltalPrice(mList));
         cartView.DisplayListCartUdated(mList);
     }
 
-    public void incrementQuantity(String slug, int quantity, int indexColor, int indexSize){
-        this.numberIncreased = quantity + 1;
-        if(indexColor == -1){
-            productInterator.getCountInStock(slug);
+    public void incrementQuantity(Items items){
+        this.numberIncreased = items.getQuantity() + 1;
+        this.itemsTmp = items;
+        if(items.getIndexColor() == -1){
+            productInterator.getCountInStock(items.getSlug());
         }else {
-            if(indexSize == -1){
-                productInterator.getCountColor(slug, indexColor);
+            if(items.getIndexSize() == -1){
+                productInterator.getCountColor(items.getSlug(), items.getIndexColor());
             }else {
-                productInterator.getCountSize(slug, indexColor, indexSize);
+                productInterator.getCountSize(items.getSlug(), items.getIndexColor(), items.getIndexSize());
             }
         }
     }
@@ -128,5 +166,45 @@ public class CartPresenter implements CallbackProductMode {
         cartView.DisplayListCartSuccess(mList);
         cartView.DisplaytotlalPrice(ToltalPrice(listItems));
         cartView.DisplayNumProduct(listItems.size());
+    }
+
+    @Override
+    public void getNumProductAvailable(int number) {
+        if(!check){
+            if(numberIncreased > number){
+                cartView.DisplayQuantityError("Sản phẩm đã hết hàng");
+            }else {
+                for(int i  = 0; i < this.mList.size(); i++){
+                    Log.e("Tri", "vong lap: " + i);
+                    if(mList.get(i).get_id().equals(this.itemsTmp.get_id())) {
+                        if(mList.get(i).getIndexColor() == this.itemsTmp.getIndexColor()){
+                            if(mList.get(i).getIndexSize() == this.itemsTmp.getIndexSize()){
+                                Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
+                                mList.get(i).setQuantity(numberIncreased);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            if(quantityUpdate > number){
+                quantityUpdate = number;
+            }
+            for(int i  = 0; i < this.mList.size(); i++){
+                Log.e("Tri", "vong lap: " + i);
+                if(mList.get(i).get_id().equals(this.itemsTmp.get_id())) {
+                    if(mList.get(i).getIndexColor() == this.itemsTmp.getIndexColor()){
+                        if(mList.get(i).getIndexSize() == this.itemsTmp.getIndexSize()){
+                            Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
+                            mList.get(i).setQuantity(quantityUpdate);
+                        }
+                    }
+                }
+            }
+        }
+        cartView.DisplaytotlalPrice(ToltalPrice(mList));
+        cartView.DisplayListCartUdated(mList);
+        check = false;
     }
 }

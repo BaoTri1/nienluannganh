@@ -52,7 +52,9 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
     private String slug;
     private String typeButton;
     private Context context;
+    private String colorName;
     private int indexColor;
+    private String sizeName;
     private int indexSize;
     private int NumProduct;
     private ImageView imgProduct;
@@ -100,12 +102,14 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
 
         editDisplay.setText("1");
         this.NumProduct = 1;
+        this.colorName = "";
+        this.sizeName = "";
 
         if(typeButton.equals("Thêm vào giỏ hàng")){
             btnAction.setText(typeButton);
             btnAction.setOnClickListener(view -> {
                 int quatity = Integer.parseInt(editDisplay.getText().toString().trim());
-                bottomSheetPresenter.addCart(quatity, indexColor, indexSize);
+                bottomSheetPresenter.addCart(quatity, colorName, sizeName, indexColor, indexSize);
                 DisplayMessage();
                 bottomSheetDialog.dismiss();
             });
@@ -209,6 +213,7 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
             @Override
             public void itemColorClick(int index, Color color) {
                 indexColor = index;
+                colorName= color.getName();
                 txtColor.setText("Màu sắc: " + color.getName());
                 if(color.getSize().isEmpty() || color.getSize() == null){
                     layoutSize.setVisibility(View.GONE);
@@ -218,6 +223,7 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
                     @Override
                     public void itemSizeClick(int index, Size size) {
                         indexSize = index;
+                        sizeName = size.getName();
                         txtSize.setText("Size: " + size.getName());
                         DisplayQuantity(String.valueOf(1));
                     }
@@ -244,16 +250,19 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
 
     @Override
     public void DisplayQuantityError(String message) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle("Thông báo");
-        dialog.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Thông báo");
+        builder.setMessage(message);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
+            public void run() {
+                dialog.dismiss();
             }
-        });
-        dialog.setMessage(message);
-        dialog.show().create();
+        }, 1500);
     }
 
     @Override

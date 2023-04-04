@@ -152,7 +152,6 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
                 btnExpand_collaps.setText("Xem thêm");
             }
         });
-
     }
 
     private void initView(){
