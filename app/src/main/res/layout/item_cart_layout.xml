@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imgSP_giohang"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/txtnameSanPham"
+        android:src="@mipmap/zyroimage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtNameSP_giohang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp"
+        android:text="@string/txtnameSanPham"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintLeft_toRightOf="@+id/imgSP_giohang"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtPhanLoai_giohang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp"
+        android:text="@string/phan_loai"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/imgSP_giohang"
+        app:layout_constraintTop_toBottomOf="@+id/txtNameSP_giohang" />
+
+    <TextView
+        android:id="@+id/txtGiaSP_giohang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp"
+        android:text="@string/txtgiaSanPham"
+        android:textColor="@color/color_gia"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/imgSP_giohang"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhanLoai_giohang" />
+
+
+    <LinearLayout
+        android:id="@+id/layout_NumUpDown"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/imgSP_giohang"
+        app:layout_constraintTop_toBottomOf="@+id/txtGiaSP_giohang">
+
+        <Button
+            android:id="@+id/decrement"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:backgroundTint="#EEEEEE"
+            android:padding="0dp"
+            android:text="@string/dau_tru"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/display"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:hint="@string/_1"
+            android:enabled="false"
+            android:inputType="numberDecimal"
+            android:textColor="@color/color_gia" />
+
+        <Button
+            android:id="@+id/increment"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:backgroundTint="#EEEEEE"
+            android:padding="0dp"
+            android:text="@string/dau_cong"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnMoMenu_giohang"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="18dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

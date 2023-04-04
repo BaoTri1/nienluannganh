@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/SwipeRefreshLayout_hoso"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/AppBarLayout_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/Toolbar_hoso"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_user_hoso"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/AppBarLayout_hoso"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_baseline_account_circle_24" />
+
+            <TextView
+                android:id="@+id/txtNameUser_hoso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/AppBarLayout_hoso"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@+id/img_user_hoso"
+                android:paddingTop="5dp"
+                android:text="@string/user_name"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtEmailUser_hoso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtNameUser_hoso"
+                android:layout_toEndOf="@+id/img_user_hoso"
+                android:text="@string/email_user"
+                android:textColor="#757575"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/lbl_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_user_hoso"
+                android:layout_marginStart="10dp"
+                android:background="#F5F5F5"
+                android:padding="5dp"
+                android:text="@string/lbl_hoso"
+                android:textColor="#9E9E9E"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnThongTinUser_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_hoso"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/custom_bg_btn_hoso"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawableEnd="@drawable/ic_baseline_navigate_next_24"
+                android:drawablePadding="8dp"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:text="@string/btn_thongtinuser"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDiaChi_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnThongTinUser_hoso"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/custom_bg_btn_hoso"
+                android:drawableStart="@drawable/ic_baseline_location_on_24"
+                android:drawableEnd="@drawable/ic_baseline_navigate_next_24"
+                android:drawablePadding="8dp"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:text="@string/dia_chi"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLichSuMuaHang_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnDiaChi_hoso"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/custom_bg_btn_hoso"
+                android:drawableStart="@drawable/ic_baseline_history_24"
+                android:drawableEnd="@drawable/ic_baseline_navigate_next_24"
+                android:drawablePadding="8dp"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:text="@string/LichSuMuaHang"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"/>
+
+            <TextView
+                android:id="@+id/lbl_hotro_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnLichSuMuaHang_hoso"
+                android:layout_marginStart="10dp"
+                android:background="#F5F5F5"
+                android:padding="5dp"
+                android:text="@string/ho_tro"
+                android:textColor="#9E9E9E"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnThongBao_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_hotro_hoso"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/custom_bg_btn_hoso"
+                android:drawableStart="@drawable/ic_baseline_notifications_24"
+                android:drawableEnd="@drawable/ic_baseline_navigate_next_24"
+                android:drawablePadding="8dp"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:text="@string/thong_bao"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGioiThieu_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnThongBao_hoso"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/custom_bg_btn_hoso"
+                android:drawableStart="@drawable/ic_baseline_info_24"
+                android:drawableEnd="@drawable/ic_baseline_navigate_next_24"
+                android:drawablePadding="8dp"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:text="@string/GioiThieu"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogout_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnGioiThieu_hoso"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/custom_bg_btn_hoso_dangxuat"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:text="@string/DangXuat"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/lbl_phienban_hoso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnLogout_in"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="@string/version"
+                android:textColor="#9E9E9E"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

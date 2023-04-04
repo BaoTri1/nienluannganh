@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txtNameKH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="@string/khach_hang_1"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/img_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtNameKH"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="6dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/lonhon_bonsao"/>
+
+    <TextView
+        android:id="@+id/txtBinhLuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_rate"
+        android:layout_marginStart="10dp"
+        android:padding="5dp"
+        android:text="@string/binhluan"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/txtTG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtBinhLuan"
+        android:layout_marginStart="10dp"
+        android:padding="5dp"
+        android:text="@string/tg_bl"
+        android:textColor="#BDBDBD"
+        android:textSize="15sp"/>
+
+</RelativeLayout>

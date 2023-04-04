@@ -1,0 +1,171 @@
+<resources>
+    <string name="app_name">3TEE Clothes</string>
+
+    <!--String bottom_nav-->
+    <string name="action_home">Trang chủ</string>
+    <string name="action_Favorite">Yêu thích</string>
+    <string name="action_user">Hồ sơ</string>
+    <string name="action_cartshopping">Giỏ hàng</string>
+
+    <!--String o toolbar-->
+    <string name="status_toolbar">Bạn muốn mua gì hôm nay?</string>
+
+    <!--String itemDanhMuc-->
+    <string name="lblDanhMuc">Danh Mục</string>
+    <string name="txtDanhMuc">Danh Mục 11111111111111111111111111111</string>
+
+    <!--String itemSanPham-->
+    <string name="txtnameSanPham">Sản phẩm 1</string>
+    <string name="txtgiaSanPham">100.000</string>
+    <string name="txtgiamgia">-50%</string>
+    <string name="txtDanhGia">4.5</string>
+
+    <!--String FragmentTrangChu-->
+    <string name="lbl_DanhMuc">Danh Mục</string>
+    <string name="lbl_GoiYHomNay">Gợi Ý Hôm Nay</string>
+
+
+    <!--String TimKiemActivity-->
+    <string name="lblDeXuat">Đề xuất tìm kiếm</string>
+    <string name="giay_adidas">Giày Adidas</string>
+    <string name="xoa_lich_su_tim_kiem">Xóa lịch sử tìm kiếm</string>
+    <string name="_1">1</string>
+    <string name="phan_cach">/</string>
+    <string name="_4">4</string>
+
+    <!--String chitietsanphamActivity-->
+    <string name="giay_adiddas_1">Giày Adiddas 1</string>
+    <string name="diem_rate">4.8</string>
+    <string name="lbl_daucach">|</string>
+    <string name="da_ban">Đã bán</string>
+    <string name="sodaban">124</string>
+    <string name="giahientai">10.000.000</string>
+    <string name="giasanpham">12.000.000</string>
+    <string name="donvitien">đ</string>
+    <string name="giamgia">-20%</string>
+    <string name="phi_van_chuyen">Phí vận chuyển:</string>
+    <string name="phivanchuyen">đ16.000</string>
+
+    <!--String bottom_nav_ctsp-->
+    <string name="action_addgiohang">Thêm vào giỏ hàng</string>
+    <string name="action_send">Nhắn với shop</string>
+    <string name="action_muangay">Mua ngay</string>
+
+    <string name="lblmotasp">Mô tả sản phẩm</string>
+    <string name="motasanpham">Áo thun V7 Official\n
+Áo thun Tee Dreew - Áo thun tay lỡ full tags. ( V12 )\n
+-------------------\n
+⚜️THÔNG TIN SẢN PHẨM:\n
+-  V7 Official chuyên cung cấp áo thun unixex nam nữ\n
+- Chất liệu thun cotton thoáng mát mặc thoải mái không bị nóng, không xù lông khi sử dụng lâu.\n
+- Thiết kế thời trang, trẻ trung năng động phù hợp xu hướng hiện nay\n
+- Đường may tinh tế sắc sảo\n
+✔️Sản Phẩm do chính V7 Official sản xuất nên chất lượng luôn đảm bảo cho mọi người nhé\n
+
+⚜️ HƯỚNG DẪN CHỌN SIZE\n
+- Bảng size phù hợp với người từ 40 - 80kg\n
+- Các bạn đọc kĩ Hướng Dẫn chi tiết chọn size của shop để lựa chọn nhé\n
+✔️ Size : M ( 40 đến 55kg )\n
+ ✔️ Size L: (55 đến 65kg )\n
+✔️ Size XL: (65 - 80kg )\n
+✪ Size có thể thay đổi tùy vào chiều cao mỗi người. Khách hàng tham khảo bảng size V7 gợi ý nhé\n
+✪ Các bạn khó chọn SIZE hoặc phân vân đừng ngại ngần cứ chat với Shop để tư vấn chọn size chuẩn và hướng dẫn các vấn đề sau khi mua hàng nhé\n
+⚜️CAM KẾT KHI MUA HÀNG\n
+✔Về chất lượng áo thun: Shop cam kết cả về CHẤT LIỆU cũng như HÌNH DÁNG ( đúng với những gì được nêu bật trong phần mô tả sản phẩm).\n
+ ✔Về giá cả của áo: Shop nhập với số lượng lớn và trực tiếp nên GIÁ CẢ TỐT NHẤT.\n
+✔Về dịch vụ chăm sóc khách hàng: Shop sẽ cố gắng phục vụ trải nghiệm mua hàng TỐT NHẤT của khách hàng.\n
+✔Thời gian chuẩn bị hàng: Hàng có sẵn, thời gian chuẩn bị TỐI ƯU NHẤT.\n
+⚜️ CHÍNH SÁCH ĐỔI HÀNG:\n
+ 1. Điều kiện áp dụng (trong vòng 07 ngày kể từ ngày nhận hàng) - Hàng hóa còn mới, chưa qua sử dụng - Hàng hóa bị hư hỏng do vận chuyển hoặc nhà sản xuất\n
+ 2. Trường hợp được chấp nhận - Hàng không đúng size, kiểu dáng như quý khách đặt hàng - Không đủ số lượng, không đủ bộ như trong đơn hàng\n
+3. Trường hợp không đủ điều kiện áp dụng chính sách: - Quá 07 ngày kể từ khi Quý khách nhận hàng - Gửi lại hàng không đúng mẫu mã, không phải hàng của V7 - Đặt nhầm sản phẩm, chủng loại, không thích, không hợp… --------------------------------------------\n
+➡ LƯU Ý KHI SỬ DỤNG CÁC SẢN PHẨM ÁO THUN CỦA SHOP\n
+- cách bảo quản áo tốt nhất là giặt tay với bột (nước) giặt nhẹ để giữ được độ bền của vải, tránh bị phai màu từ các loại quần áo khác.\n
+ - Chỉ nên để ở chế độ giặt nhẹ, hoặc mức trung bình và nên phân loại áo cùng màu và cùng loại vải khi giặt.\n
+- Nên phơi áo thun ở nơi thoáng mát, tránh ánh nắng trực tiếp dễ bị phai bạc màu, nên làm khô áo bằng cách phơi ở những điểm đón gió sẽ giữ được màu vải tốt hơn.\n
+☬ Địa Chỉ: số nhà 23 ngách 16 ngõ 97, Khương trung, Thanh xuân, Hà Nội\n
+☬ Hotline: 0888859688 ( Hỗ trợ khiếu nại)\n
+☬ ZALO: 0888859686 -Chỉ add Zalo- (Hỗ trợ đơn hàng nhầm, thiếu, lỗi)\n
+⏰ Giờ làm việc tại cửa hàng: 9h - 22h\n
+=====>> Bạn còn trần chờ gì nữa, hay Click chuột ngay để mang em nó về nhà nhé!\n
+#unisex #aothuntron #aothunnu #aothunnam #aogiare #aophongunisex #aoteen #aothuncotton #aothundep #thoitrangnu #thoitrangnam #aothun #ao #thun #nam #nu #co #tron #tayngan #taylo #ni #cotton #cogian #thoangmat #aotee #aotaylo #aotaylonam #aotaylonu #aotayloformrong #aothuntaylo #aothununisex #v7official#N7</string>
+    <string name="xem_them">Xem thêm</string>
+    <string name="danh_gia_san_pham">Đánh giá sản phẩm</string>
+    <string name="binhluan">Chất lượng như này là best segment market price luôn rồi, Quá Ngon, Quá Rẻ trong phân khúc tầm giá thị trường, âm thanh, bass đập cực cực căng nếu không nói là cũng 9/10 với những phân khúc cao hơn, độ trễ rất tốt, hầu như mình trải nghiệm là không delay, còn với miếng mút đệm tai thì tai mình mút nào cũng hợp cả nhưng mình chuộng mút nhỏ nhất, vì âm thanh sẽ sâu hơn. Rất tốt</string>
+    <string name="khach_hang_2">Khách hàng 2</string>
+    <string name="khach_hang_1">Khách hàng 1</string>
+    <string name="xem_tat_ca">Xem tất cả</string>
+    <string name="_50">(50)</string>
+    <string name="_4_8_5">(4.8/5)</string>
+    <string name="tg_bl">30-1-2023 14:44</string>
+    <string name="lblCoTheBanCungThich">Có thể bạn cũng thích</string>
+    <string name="kho_50">Kho: 50</string>
+    <string name="size">Kích thước</string>
+    <string name="Bangsize">Bảng size</string>
+    <string name="mau_sac">Màu sắc</string>
+    <string name="soluong">Số lượng:</string>
+    <string name="size_xl">XL</string>
+    <string name="dau_tru">—</string>
+    <string name="dau_cong">+</string>
+    <string name="thong_bao">Thông báo</string>
+    <string name="lbl_muasamdinao">Chưa có sản phẩm yêu thích. Hãy mua sắm nào!</string>
+    <string name="lbl_muasamdinao2">Chưa có sản phẩm trong giỏ hàng. Hãy mua sắm nào!</string>
+    <string name="them_vo_gio_hang">Thêm vào giỏ hàng</string>
+    <string name="xoa_khoi_yeu_thich">Xóa khỏi yêu thích</string>
+    <string name="so_san_pham">5 sản phẩm</string>
+    <string name="gia_thap_cao">Giá(Thấp - Cao)</string>
+    <string name="gia_cao_thap">Giá(Cao - Thấp)</string>
+    <string name="tong">Tổng:</string>
+    <string name="them_vao_yeu_thich">Thêm vào yêu thích</string>
+    <string name="xoa_khoi_gio_hang">Xóa khỏi giỏ hàng</string>
+    <string name="phan_loai">Size: 39, Màu:</string>
+    <string name="user_name">User Name</string>
+    <string name="email_user">abc123@gmail.com</string>
+    <string name="lbl_hoso">Tài khoản của bạn</string>
+    <string name="btn_thongtinuser">Hồ sơ của bạn</string>
+    <string name="dia_chi">Địa chỉ</string>
+    <string name="ho_tro">Hỗ trợ</string>
+    <string name="GioiThieu">Giới thiệu</string>
+    <string name="DangXuat">Đăng xuất</string>
+    <string name="LichSuMuaHang">Lịch sử mua hàng</string>
+    <string name="version">Version</string>
+    <string name="chinhsua">Chỉnh sửa</string>
+    <string name="btnSua">Sửa</string>
+    <string name="btnXong">Xong</string>
+    <string name="lblTenDangNhap">Tên Đăng Nhập</string>
+    <string name="lblSDT">SĐT</string>
+    <string name="_0123456789">0123456789</string>
+    <string name="lblGioiTinh">Giới tính</string>
+    <string name="txtNam">Nam</string>
+    <string name="lblNgaySinh">Ngày sinh</string>
+    <string name="txtNgaySinh">2-1-2001</string>
+    <string name="lblEmail">Email</string>
+    <string name="abc_gmail_com">abc@gmail.com</string>
+    <string name="btnThietLapMatKhau">Thiết lập mật khẩu</string>
+    <string name="hintSDTmoi">Nhập số điện thoại mới</string>
+    <string name="lblNhacNhoSDTMoi">Nhập số điện thoại mới để nhập mã OTP xác nhận.</string>
+    <string name="btnTiepTuc">Tiếp tục</string>
+    <string name="lbl_password">Mật khẩu</string>
+    <string name="btnLogin">Đăng nhập</string>
+    <string name="btnDangKy">Đăng ký</string>
+    <string name="lblLuaChonKhac">Đăng nhập bằng</string>
+    <string name="lblLuaChonKhac2">Đăng ký với</string>
+    <string name="lblHoTen">Họ và tên</string>
+    <string name="lblDaCoTaiKhoan">Đã có tài khản?</string>
+    <string name="btnSignup">Đăng ký</string>
+    <string name="lblConfirmPassword">Xác nhận mật khẩu</string>
+    <string name="lblQuenMAtKhau">Quên mật khẩu?</string>
+    <string name="lblMemo">Đănng nhập thất bại</string>
+    <string-array name="optionGioiTinh">
+        <item>Nam</item>
+        <item>Nữ</item>
+        <item>Khác</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lblNotReview">Chưa có đánh giá về sản phẩm này.</string>
+    <string name="btnLoc">Lọc</string>
+    <string name="toast_message">Đã thêm sản phẩm vào giỏ hàng.</string>
+
+
+</resources>
