@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shopproject.R;
-import com.example.shopproject.mode.SearchHistory;
+import com.example.shopproject.sqlite.Entity.SearchHistory;
 import com.example.shopproject.presenter.SearchPresenter;
 import com.example.shopproject.view.HistorySearchView;
 import com.example.shopproject.view.adapter.HistorySearchAdapter;

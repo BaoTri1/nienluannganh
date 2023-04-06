@@ -1,4 +1,4 @@
-package com.example.shopproject.sqlite;
+package com.example.shopproject.sqlite.Database;
 
 import android.content.Context;
 
@@ -6,10 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.shopproject.mode.Account;
-import com.example.shopproject.mode.SearchHistory;
+import com.example.shopproject.sqlite.DAO.AccountDAO;
+import com.example.shopproject.sqlite.DAO.SearchHistoryDAO;
+import com.example.shopproject.sqlite.Entity.Account;
+import com.example.shopproject.sqlite.Entity.SearchHistory;
 
-@Database(entities = {SearchHistory.class, Account.class}, version = 1)
+@Database(entities = {SearchHistory.class, Account.class}, version = 2)
 public  abstract class ShopProjectDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "shop.db";
@@ -19,6 +21,7 @@ public  abstract class ShopProjectDatabase extends RoomDatabase {
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(), ShopProjectDatabase.class, DATABASE_NAME)
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;

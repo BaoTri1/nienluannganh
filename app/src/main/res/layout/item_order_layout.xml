@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imgSP_order"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/txtnameSanPham"
+        android:src="@mipmap/zyroimage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtNameSP_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp"
+        android:text="@string/txtnameSanPham"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintLeft_toRightOf="@+id/imgSP_order"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtPhanLoai_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp"
+        android:text="@string/phan_loai"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/imgSP_order"
+        app:layout_constraintTop_toBottomOf="@+id/txtNameSP_order" />
+
+    <TextView
+        android:id="@+id/txtPrice_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp"
+        android:text="@string/txtgiaSanPham"
+        android:textColor="@color/color_gia"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/imgSP_order"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhanLoai_order" />
+
+    <TextView
+        android:id="@+id/txtQuantity_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp"
+        android:text="x3"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtPrice_order"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

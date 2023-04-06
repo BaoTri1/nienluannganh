@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopproject.R;
-import com.example.shopproject.mode.SearchHistory;
+import com.example.shopproject.sqlite.Entity.SearchHistory;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
 
 import java.util.List;

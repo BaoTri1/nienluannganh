@@ -1,4 +1,4 @@
-package com.example.shopproject.mode;
+package com.example.shopproject.sqlite.Entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

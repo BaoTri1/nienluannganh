@@ -2,8 +2,8 @@ package com.example.shopproject.presenter;
 
 import android.content.Context;
 
-import com.example.shopproject.mode.SearchHistory;
-import com.example.shopproject.sqlite.ShopProjectDatabase;
+import com.example.shopproject.sqlite.Entity.SearchHistory;
+import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
 import com.example.shopproject.view.HistorySearchView;
 
 import java.util.List;

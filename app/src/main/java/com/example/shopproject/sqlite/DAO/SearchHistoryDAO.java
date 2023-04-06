@@ -1,10 +1,10 @@
-package com.example.shopproject.sqlite;
+package com.example.shopproject.sqlite.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.shopproject.mode.SearchHistory;
+import com.example.shopproject.sqlite.Entity.SearchHistory;
 
 import java.util.List;
 

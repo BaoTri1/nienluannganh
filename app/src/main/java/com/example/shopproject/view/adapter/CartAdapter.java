@@ -31,8 +31,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private Context mContext;
     private List<Items> mList;
     private clickListener listener;
-    private String color;
-    private String size;
 
     public CartAdapter(Context mContext, List<Items> mList, clickListener listener) {
         this.mContext = mContext;

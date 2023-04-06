@@ -1,5 +1,6 @@
 package com.example.shopproject.view.UI;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
@@ -40,6 +41,11 @@ public class PayMentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pay_ment);
 
         initView();
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Thanh toán");
 
     }
 

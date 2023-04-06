@@ -3,6 +3,7 @@ package com.example.shopproject.presenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.example.shopproject.mode.User;
@@ -51,6 +52,7 @@ public class LoginPresenter implements CallbackUserMode {
     public void LoginSuccess(User user) {
         mLoginView.DisplayLoginSuccess(user);
         Publics.SaveToken(mContext, user.getToken());
+        Log.e("Tri", Publics.GetToken(mContext));
     }
 
     @Override

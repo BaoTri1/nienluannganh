@@ -3,6 +3,7 @@ package com.example.shopproject.view.UI.Fragment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -31,6 +32,7 @@ import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.CartPresenter;
 import com.example.shopproject.view.CartView;
 import com.example.shopproject.view.UI.MainActivity;
+import com.example.shopproject.view.UI.PayMentActivity;
 import com.example.shopproject.view.adapter.CartAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
 
@@ -79,7 +81,8 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         });
 
         btnThanhToan.setOnClickListener(view -> {
-
+            Intent intent = new Intent(getActivity(), PayMentActivity.class);
+            startActivity(intent);
         });
 
         btnXoaALL.setOnClickListener(view -> {

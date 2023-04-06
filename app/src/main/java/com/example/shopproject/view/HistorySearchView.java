@@ -1,6 +1,6 @@
 package com.example.shopproject.view;
 
-import com.example.shopproject.mode.SearchHistory;
+import com.example.shopproject.sqlite.Entity.SearchHistory;
 
 import java.util.List;
 
