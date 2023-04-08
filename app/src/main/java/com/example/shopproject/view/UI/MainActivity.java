@@ -1,10 +1,13 @@
 package com.example.shopproject.view.UI;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.shopproject.R;
 import com.example.shopproject.mode.Items;
+import com.example.shopproject.orther_handle.AccountManagement;
+import com.example.shopproject.sqlite.Entity.Account;
 import com.example.shopproject.view.UI.Fragment.CartFragment;
 import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
 import com.example.shopproject.view.adapter.ViewPagerAdapter;
@@ -50,6 +55,25 @@ public class MainActivity extends AppCompatActivity{
 
         //set sự kiện click cho BottomNavigation
         BottomNavigationClick();
+
+        Bundle bundle = getIntent().getExtras();
+        String message = bundle.getString("MESSAGE_KEY");
+        if(!message.equals("")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Thông báo");
+            builder.setNegativeButton("Thử lại", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            builder.setMessage(message);
+            builder.create().show();
+        }else{
+
+        }
 
 
     }
@@ -143,6 +167,13 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+
+    @Override
     public void onBackPressed() {
         if(backPressedtime + 2000 > System.currentTimeMillis()){
             toast.cancel();
@@ -154,5 +185,4 @@ public class MainActivity extends AppCompatActivity{
         }
         backPressedtime = System.currentTimeMillis();
     }
-
 }

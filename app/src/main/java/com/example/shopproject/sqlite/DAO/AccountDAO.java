@@ -3,6 +3,7 @@ package com.example.shopproject.sqlite.DAO;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.shopproject.sqlite.Entity.Account;
 
@@ -17,4 +18,12 @@ public interface AccountDAO {
 
     @Query("DELETE FROM Account")
     void deleteAccount();
+
+    @Query("SELECT login FROM Account where email = :email")
+    boolean checkLogin(String email);
+
+    @Query("Update Account set login = :state where email = :email")
+    void setStateFalseLogin(String email, boolean state);
+
+
 }

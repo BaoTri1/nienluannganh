@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -32,10 +33,13 @@ import com.example.shopproject.mode.Color;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.Size;
+import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.BottomSheetPresenter;
 import com.example.shopproject.view.BottomSheetView;
 import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
+import com.example.shopproject.view.UI.LoginActivity;
+import com.example.shopproject.view.UI.MainActivity;
 import com.example.shopproject.view.adapter.ColorAdapter;
 import com.example.shopproject.view.adapter.SizeAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
@@ -113,13 +117,14 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
                 DisplayMessage();
                 bottomSheetDialog.dismiss();
             });
-        }else if(typeButton.equals("Mua ngay")){
+        }
+        else if(typeButton.equals("Mua ngay")){
             btnAction.setText(typeButton);
             btnAction.setOnClickListener(view -> {
                 int quatity = Integer.parseInt(editDisplay.getText().toString().trim());
                 Toast.makeText(getActivity(), typeButton, Toast.LENGTH_SHORT).show();
+                bottomSheetDialog.dismiss();
             });
-            bottomSheetDialog.dismiss();
         }
 
         btnDecrement.setOnClickListener(view -> {

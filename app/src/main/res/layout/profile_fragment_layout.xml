@@ -189,7 +189,7 @@
                 android:background="@drawable/custom_bg_btn_hoso_dangxuat"
                 android:elevation="10dp"
                 android:padding="10dp"
-                android:text="@string/DangXuat"
+                android:text="@string/btnLogin"
                 android:textAllCaps="false"
                 android:textColor="@color/white"/>
 

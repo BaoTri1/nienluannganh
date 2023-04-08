@@ -43,6 +43,7 @@ import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.Photo;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.Review;
+import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.orther_handle.CharacterItemDecoration;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.DetailProductPresenter;
@@ -117,7 +118,8 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         detailProductPresenter.createListProduct();
 
         btnSearch.setOnClickListener(view -> {
-            Toast.makeText(DetailProductActivity.this, "Mo tim kiem", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(DetailProductActivity.this, SearchActivity.class);
+            startActivity(intent);
         });
 
         btnLike.setOnClickListener(view -> {
@@ -130,13 +132,43 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         });
 
         btnAddCart.setOnClickListener(view -> {
-            BottomSheetProductFragment bottom = new BottomSheetProductFragment(DetailProductActivity.this, slug, "Thêm vào giỏ hàng");
-            bottom.show(getSupportFragmentManager(), bottom.getTag());
+            if(AccountManagement.checkStateLogin(this)){
+                BottomSheetProductFragment bottom = new BottomSheetProductFragment(DetailProductActivity.this, slug, "Thêm vào giỏ hàng");
+                bottom.show(getSupportFragmentManager(), bottom.getTag());
+            }else {
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+                builder.setTitle("Thông báo");
+                builder.setNegativeButton("Đăng nhập", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(DetailProductActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setMessage("Đăng nhập để tiếp tục thực hiện.");
+                builder.create().show();
+            }
         });
 
         btnBuyNow.setOnClickListener(view -> {
-            BottomSheetProductFragment bottom = new BottomSheetProductFragment(DetailProductActivity.this, slug, "Mua ngay");
-            bottom.show(getSupportFragmentManager(), bottom.getTag());
+            if(AccountManagement.checkStateLogin(this)){
+                BottomSheetProductFragment bottom = new BottomSheetProductFragment(DetailProductActivity.this, slug, "Mua ngay");
+                bottom.show(getSupportFragmentManager(), bottom.getTag());
+            }else {
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+                builder.setTitle("Thông báo");
+                builder.setNegativeButton("Đăng nhập", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(DetailProductActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setMessage("Đăng nhập để tiếp tục thực hiện.");
+                builder.create().show();
+            }
         });
 
         btnExpand_collaps.setOnClickListener(view -> {

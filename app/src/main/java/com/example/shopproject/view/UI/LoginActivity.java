@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.shopproject.R;
 import com.example.shopproject.mode.LoginRequest;
 import com.example.shopproject.mode.User;
+import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.presenter.LoginPresenter;
 import com.example.shopproject.view.LoginView;
 import com.example.shopproject.view.custom.LatoBoldTextView;
@@ -83,6 +84,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void DisplayLoginSuccess(User user) {
+        AccountManagement.deleteAccount(this);
+        String email = editEmail.getText().toString().trim();
+        String passwd = editPasswd.getText().toString().trim();
+        AccountManagement.saveAccount(this, email, passwd, true);
         txtMessage.setVisibility(View.GONE);
         Toast.makeText(LoginActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
         Intent intentMainActivity = new Intent(LoginActivity.this, MainActivity.class);

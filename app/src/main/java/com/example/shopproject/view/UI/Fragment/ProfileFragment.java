@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,9 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.shopproject.R;
+import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.view.UI.ChiTIetHoSo_Activity;
+import com.example.shopproject.view.UI.LoginActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,7 +41,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private AppCompatButton btnMoLSMH;
     private AppCompatButton btnMoCaiDatThongBao;
     private AppCompatButton btnMoGioiThieu;
-    private AppCompatButton btnDangXuat;
+    private AppCompatButton btnLogin_out;
     private TextView txtVersion;
 
     /*Thong bao cho tai khoản admin khong co quyen han*/
@@ -68,6 +71,19 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             startActivity(intentChiTietHoSo);
         });
 
+        btnLogin_out.setOnClickListener(view ->{
+            String typebutton = btnLogin_out.getText().toString().trim();
+            if(typebutton.equals("Đăng xuất")){
+                AccountManagement.deleteAccount(getActivity());
+            }
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        });
+
+        if(AccountManagement.getAccount(getActivity()) != null){
+            btnLogin_out.setText("Đăng xuất");
+        }
+
 
         return myView;
     }
@@ -83,7 +99,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         btnMoLSMH = myView.findViewById(R.id.btnLichSuMuaHang_hoso);
         btnMoCaiDatThongBao = myView.findViewById(R.id.btnThongBao_hoso);
         btnMoGioiThieu = myView.findViewById(R.id.btnGioiThieu_hoso);
-        btnDangXuat = myView.findViewById(R.id.btnLogout_in);
+        btnLogin_out = myView.findViewById(R.id.btnLogout_in);
         txtVersion = myView.findViewById(R.id.lbl_phienban_hoso);
     }
 
