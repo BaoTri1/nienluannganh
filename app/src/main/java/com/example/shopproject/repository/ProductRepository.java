@@ -9,5 +9,7 @@ public interface ProductRepository {
     void getCountColor(String slug, int indexColor);
     void getCountInStock(String slug);
     void SearchProductsByCategory(String category);
+    void SearchProductsByQuery(String query);
+    void getListProductFilter(String category, String query, String price, String rating, String order);
     void getListCart();
 }

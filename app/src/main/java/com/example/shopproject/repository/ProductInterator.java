@@ -211,6 +211,46 @@ public class ProductInterator implements ProductRepository{
     }
 
     @Override
+    public void SearchProductsByQuery(String query) {
+        APIService.apiService.searchProductByQuery(query).enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                if(response.isSuccessful()){
+                    SearchResponse result = response.body();
+                    callbackProductMode.getSearchResponseSuccess(result);
+                }else {
+                    callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+            }
+        });
+    }
+
+    @Override
+    public void getListProductFilter(String category, String query, String price, String rating, String order) {
+        APIService.apiService.FilterProduct(category, query, price, rating, order).enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                if(response.isSuccessful()){
+                    SearchResponse result = response.body();
+                    callbackProductMode.getSearchResponseSuccess(result);
+                }else {
+                    callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+            }
+        });
+    }
+
+    @Override
     public void getListCart() {
         List<Items> list = new ArrayList<>();
         callbackProductMode.getListCartSuccess(list);

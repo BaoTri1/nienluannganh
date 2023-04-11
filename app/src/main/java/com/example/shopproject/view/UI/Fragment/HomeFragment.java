@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
     private MainActivity mainActivity;
 
     private static final int ADD_CART_SUCCESS = 1;
+    private static final int OPEN_CART = 2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -217,14 +218,16 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
 
     @Override
     public void DisplayCatalog(List<String> listCatalog) {
-        catalogAdapter = new CatalogAdapter(listCatalog, new clickListener() {
+        catalogAdapter = new CatalogAdapter(getActivity(), listCatalog, new clickListener() {
             @Override
             public void itemCatalogClick(String category) {
                 Intent intent = new Intent(getActivity(), ProductActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("Category", category);
+                bundle.putString("TYPE_KEY", "Category");
+                bundle.putString("KEYWORK_KEY", category);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent, OPEN_CART);
             }
         });
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
@@ -302,6 +305,9 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
                     mainActivity.GoCartFragment();
                 }
             }
+        }
+        else if(requestCode == OPEN_CART && resultCode == Activity.RESULT_OK){
+            mainActivity.GoCartFragment();
         }
     }
 

@@ -1,5 +1,8 @@
 package com.example.shopproject.view.adapter;
 
+import android.content.Context;
+import android.os.Build;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +19,12 @@ import java.util.List;
 
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CategoryViewHolder>{
 
+    private Context mContext;
     private List<String> mListCategory;
     private clickListener listener;
 
-    public CatalogAdapter(List<String> mListCategory, clickListener clickListener) {
+    public CatalogAdapter(Context mContext, List<String> mListCategory, clickListener clickListener) {
+        this.mContext = mContext;
         this.mListCategory = mListCategory;
         this.listener = clickListener;
     }
@@ -45,6 +50,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.Category
         holder.txtnameCategory.setText(category);
         holder.layoutCategory.setOnClickListener(view -> {
             listener.itemCatalogClick(category);
+
         });
     }
 

@@ -57,25 +57,25 @@ public class MainActivity extends AppCompatActivity{
         BottomNavigationClick();
 
         Bundle bundle = getIntent().getExtras();
-        String message = bundle.getString("MESSAGE_KEY");
-        if(!message.equals("")){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Thông báo");
-            builder.setNegativeButton("Thử lại", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-            builder.setMessage(message);
-            builder.create().show();
-        }else{
+        if(bundle != null){
+            String message = bundle.getString("MESSAGE_KEY");
+            if(!message.equals("")){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Thông báo");
+                builder.setNegativeButton("Thử lại", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setMessage(message);
+                builder.create().show();
+            }else{
 
+            }
         }
-
-
     }
 
     /*private void setupAnimationViewPager2(){

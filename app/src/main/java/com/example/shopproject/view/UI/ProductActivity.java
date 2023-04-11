@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +32,15 @@ import com.example.shopproject.mode.Product;
 import com.example.shopproject.orther_handle.CharacterItemDecoration;
 import com.example.shopproject.presenter.ProductSearchPresenter;
 import com.example.shopproject.view.ProductView;
+import com.example.shopproject.view.UI.Fragment.BottomFilterFragment;
+import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
 import com.example.shopproject.view.adapter.ProductAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.List;
 
-public class ProductActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, ProductView {
+public class ProductActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, ProductView, CallbackFragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private AppBarLayout appBarLayout;
@@ -53,11 +56,30 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
     private TextView lblNotProduct;
     private ProductSearchPresenter productSearchPresenter;
 
+    private String category;
+    private String query;
+    private String price;
+    private String rate;
+    private String order;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_layout);
         initView();
+
+        category = "all";
+        query = "all";
+        price = "all";
+        rate = "all";
+        order = "newest";
+
+        Log.e("Tri", "category: " + category + "\n"
+                                + "query: " + query + "\n"
+                                + "price: " + price + "\n"
+                                + "rate: " + rate + "\n"
+                                + "order: " + order);
+
         productSearchPresenter = new ProductSearchPresenter(this, this);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -72,17 +94,70 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
         Bundle bundleReceiver = getIntent().getExtras();
         if(bundleReceiver != null) {
-            String category = bundleReceiver.getString("Category");
-            editSearch.setText(category);
-            productSearchPresenter.SearchProductsByCategory(category);
+            String type = bundleReceiver.getString("TYPE_KEY");
+            String keywork = bundleReceiver.getString("KEYWORK_KEY");
+            editSearch.setText(keywork);
+            if(type.equals("Category")){
+                query = "all";
+                category = keywork;
+                productSearchPresenter.SearchProductsByCategory(keywork);
+            }
+            else if(type.equals("Query")){
+                productSearchPresenter.SearchProductByQuery(keywork);
+                query = keywork;
+                Log.e("Tri", "category: " + category + "\n"
+                        + "query: " + query + "\n"
+                        + "price: " + price + "\n"
+                        + "rate: " + rate + "\n"
+                        + "order: " + order);
+            }
+
         }
 
-
         btnSearch.setOnClickListener(view -> {
-            Toast.makeText(this, "mo search", Toast.LENGTH_SHORT).show();
+            Intent intentSearch = new Intent(this, SearchActivity.class);
+            startActivity(intentSearch);
         });
 
+        btnFilter.setOnClickListener(view ->{
+            BottomFilterFragment fragment = new BottomFilterFragment(this);
+            fragment.show(getSupportFragmentManager(), fragment.getTag());
+        });
 
+        btnSort.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(this, btnSort);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_order, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.Latest:
+                            order = "newest";
+                            break;
+
+                        case R.id.PriceLowHight:
+                            order = "lowest";
+                            break;
+
+                        case R.id.PriceHightLow:
+                            order = "highest";
+                            break;
+
+                        case R.id.Rivews:
+                            order = "toprated";
+                            break;
+                    }
+                    Log.e("Tri", "category: " + category + "\n"
+                            + "query: " + query + "\n"
+                            + "price: " + price + "\n"
+                            + "rate: " + rate + "\n"
+                            + "order: " + order);
+                    productSearchPresenter.getListProductFilter(category, query, price, rate, order);
+                    return true;
+                }
+            });
+            popupMenu.show();
+        });
     }
 
     private void initView(){
@@ -115,10 +190,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
             case R.id.action_giohang_detail:
                 Intent intent = new Intent(ProductActivity.this, MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("MO_GIO_HANG", 2);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
                 ProductActivity.this.finish();
                 Toast.makeText(ProductActivity.this, "Gio hang", Toast.LENGTH_SHORT).show();
                 break;
@@ -144,31 +216,48 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
     @Override
     public void DisplayListProduct(List<Product> listProduct) {
-        Log.e("Tri", "no do");
         if(listProduct.isEmpty()){
             lblNotProduct.setVisibility(View.VISIBLE);
+            rcv_product.setVisibility(View.GONE);
             return;
         }
-        adapterProduct = new ProductAdapter(this, listProduct, new clickListener() {
-            @Override
-            public void onClickDetailProduct(Product product) {
-                Intent intentDetailProduct = new Intent(ProductActivity.this, DetailProductActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("slug", product.getSlug());
-                intentDetailProduct.putExtras(bundle);
-                startActivity(intentDetailProduct);
-            }
-        });
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
-        rcv_product.setLayoutManager(manager);
-        rcv_product.addItemDecoration(new CharacterItemDecoration(20));
-        rcv_product.setHasFixedSize(true);
-        rcv_product.setAdapter(adapterProduct);
+        if(adapterProduct == null){
+            adapterProduct = new ProductAdapter(this, listProduct, new clickListener() {
+                @Override
+                public void onClickDetailProduct(Product product) {
+                    Intent intentDetailProduct = new Intent(ProductActivity.this, DetailProductActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("slug", product.getSlug());
+                    intentDetailProduct.putExtras(bundle);
+                    startActivity(intentDetailProduct);
+                }
+            });
+            GridLayoutManager manager = new GridLayoutManager(this, 2);
+            rcv_product.setLayoutManager(manager);
+            rcv_product.addItemDecoration(new CharacterItemDecoration(20));
+            rcv_product.setHasFixedSize(true);
+            rcv_product.setAdapter(adapterProduct);
+        }else {
+            adapterProduct.setData(listProduct);
+        }
     }
 
     @Override
     public void DisplayNumProducts(String message) {
         txtNumProduct.setText(message);
+    }
+
+    @Override
+    public void getListProductFilter(String catalog, String price, String rate) {
+        this.category = catalog;
+        this.price = price;
+        this.rate = rate;
+        Log.e("Tri", "category: " + category + "\n"
+                + "query: " + query + "\n"
+                + "price: " + price + "\n"
+                + "rate: " + rate + "\n"
+                + "order: " + order);
+        productSearchPresenter.getListProductFilter(category, query, this.price, this.rate, order);
     }
 
     @Override

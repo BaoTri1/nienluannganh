@@ -86,6 +86,16 @@ public interface APIService {
     @GET("/api/products/search")
     Call<SearchResponse> searchProductByCategory(@Query("category") String category);
 
+    @GET("/api/products/search")
+    Call<SearchResponse> searchProductByQuery(@Query("query") String query);
+
+    @GET("/api/products/search")
+    Call<SearchResponse> FilterProduct(@Query("category") String category,
+                                       @Query("query") String query,
+                                       @Query("price") String price,
+                                       @Query("rating") String rating,
+                                       @Query("order") String order);
+
 }
 
 

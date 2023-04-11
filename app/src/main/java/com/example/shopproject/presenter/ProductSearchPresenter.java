@@ -32,6 +32,24 @@ public class ProductSearchPresenter implements CallbackProductMode {
         }
     }
 
+    public void SearchProductByQuery(String query){
+        if(Publics.isNetWorkAvaliable(mContext)){
+            productInterator.SearchProductsByQuery(query);
+
+        }else {
+            productView.DisplayNoNetWork("Đã xảy ra lỗi. Vui lòng kiểm tra lại kết nối mạng!");
+        }
+    }
+
+    public void getListProductFilter(String category, String query, String price, String rating, String order){
+        if(Publics.isNetWorkAvaliable(mContext)){
+            productInterator.getListProductFilter(category, query, price, rating, order);
+
+        }else {
+            productView.DisplayNoNetWork("Đã xảy ra lỗi. Vui lòng kiểm tra lại kết nối mạng!");
+        }
+    }
+
     @Override
     public void getSearchResponseSuccess(SearchResponse searchResponse) {
         productView.DisplayListProduct(searchResponse.getProducts());

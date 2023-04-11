@@ -83,7 +83,7 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
         this.context = context;
         this.typeButton = typeButton;
         this.slug = slug;
-        callbackFragment = (CallbackFragment) getActivity();
+        //callbackFragment = (CallbackFragment) getActivity();
         this.bottomSheetPresenter = new BottomSheetPresenter(context, this);
     }
 

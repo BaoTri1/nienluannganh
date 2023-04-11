@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -91,6 +92,12 @@ public class SearchActivity extends AppCompatActivity implements HistorySearchVi
 
         //Mở Activity Theo keywork
         Toast.makeText(this, "Mở Activity " + keywork, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ProductActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("TYPE_KEY", "Query");
+        bundle.putString("KEYWORK_KEY", keywork);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
     }
 
@@ -111,6 +118,13 @@ public class SearchActivity extends AppCompatActivity implements HistorySearchVi
             @Override
             public void onClickHistorySearch(String search) {
                 Toast.makeText(SearchActivity.this, search, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SearchActivity.this, ProductActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("TYPE_KEY", "Query");
+                bundle.putString("KEYWORK_KEY", search);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
             }
         });
         LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
