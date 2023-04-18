@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.UI.EditAddressActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/AppBarLayout_edAddress"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/ToolBar_edAddress"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:id="@+id/lblContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/AppBarLayout_edAddress"
+            android:padding="10dp"
+            android:text="Liên hệ:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContact"
+            android:layout_margin="10dp"
+            app:boxBackgroundColor="@color/white"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip_SDT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tip_Name"
+            android:layout_margin="10dp"
+            app:boxBackgroundColor="@color/white"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/editSDT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số điện thoại"
+                android:inputType="phone"
+                android:imeOptions="actionNext"
+                android:maxLength="10"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/lblAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tip_SDT"
+            android:padding="10dp"
+            android:text="Địa chỉ:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tip_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblAddress"
+            android:layout_margin="10dp"
+            app:boxBackgroundColor="@color/white"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/editAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số nhà, đường,...."
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/lblProvince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tip_address"
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
+            android:text="Tỉnh / thành:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerProvince"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblProvince"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"/>
+
+        <TextView
+            android:id="@+id/lblDistrict"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerProvince"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:text="Quận / huyện:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerDistrict"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDistrict"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent" />
+
+        <TextView
+            android:id="@+id/lblWards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerDistrict"
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
+            android:text="Phường / xã:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerWards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblWards"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConfrim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinnerWards"
+            android:layout_margin="10dp"
+            android:background="@color/black"
+            android:text="Xác nhận"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

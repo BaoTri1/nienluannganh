@@ -10,10 +10,15 @@ import com.example.shopproject.mode.Product;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.callbackMode.CallbackProductMode;
 import com.example.shopproject.repository.ProductInterator;
+import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
+import com.example.shopproject.sqlite.Entity.itemCart;
 import com.example.shopproject.view.BottomSheetView;
 import com.example.shopproject.view.UI.Fragment.CartFragment;
 import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
 import com.example.shopproject.view.UI.MainActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BottomSheetPresenter implements CallbackProductMode {
 
@@ -22,8 +27,11 @@ public class BottomSheetPresenter implements CallbackProductMode {
     private ProductInterator productInterator;
     private int numberIncreased;
     private int numberfillin;
-    private boolean check = false;
+    private int numberUpdate;
+    private int check = 0;
     private Product product;
+    private String email;
+    private String size;
 
     public BottomSheetPresenter(Context mContext, BottomSheetView bottomSheetView) {
         this.mContext = mContext;
@@ -62,7 +70,7 @@ public class BottomSheetPresenter implements CallbackProductMode {
 
     public void FillinQuantity(String slug, int number, int indexColor, int indexSize){
         numberfillin = number;
-        check = true;
+        check = 1;
         if(indexColor == -1){
             productInterator.getCountInStock(slug);
         }else {
@@ -78,16 +86,35 @@ public class BottomSheetPresenter implements CallbackProductMode {
         bottomSheetView.DisplayImgageDialog(this.product.getImage());
     }
 
-//    public void addCart(int quantity, int indexColor, int indexSize){
-//        String slug = this.product.getSlug();
-//        String name = this.product.getName();
-//        String image = this.product.getImage();
-//        int price = this.product.getPrice();
-//        String _id = this.product.get_id();
-//
-//        Items items = new Items(slug, name, quantity, image, price, _id, indexColor, indexSize);
-//        bottomSheetView.PassItemCart(items);
-//    }
+    public void saveItemCart(int quantity, String color, String size, int indexColor, int indexSize){
+        String slug = this.product.getSlug();
+        String name = this.product.getName();
+        String image = this.product.getImage();
+        int price = this.product.getPrice();
+        String _id = this.product.get_id();
+
+        email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+        this.size = size;
+        itemCart itemCartTmp = ShopProjectDatabase.getInstance(mContext).itemCartDAO().getItemCartBySlug(email, slug, size);
+        if(itemCartTmp == null){
+            itemCart itemCart = new itemCart(email, slug, name, quantity, image, price, _id, indexColor, indexSize, color, size);
+            ShopProjectDatabase.getInstance(mContext).itemCartDAO().insertItemCart(itemCart);
+        }else {
+            Log.e("Tri", "đã tồn tại: " + itemCartTmp.getSlug());
+            numberUpdate = quantity + itemCartTmp.getQuantity();
+            check = 2;
+            if(indexColor == -1){
+                productInterator.getCountInStock(slug);
+            }else {
+                if(indexSize == -1){
+                    productInterator.getCountColor(slug, indexColor);
+                }else {
+                    productInterator.getCountSize(slug, indexColor, indexSize);
+                }
+            }
+        }
+
+    }
 
     public void addCart(int quantity, String color, String size, int indexColor, int indexSize){
         String slug = this.product.getSlug();
@@ -100,24 +127,44 @@ public class BottomSheetPresenter implements CallbackProductMode {
         bottomSheetView.PassItemCart(items);
     }
 
+    public void createItemOrder(int quantity, String color, String size, int indexColor, int indexSize){
+        String slug = this.product.getSlug();
+        String name = this.product.getName();
+        String image = this.product.getImage();
+        int price = this.product.getPrice();
+        String _id = this.product.get_id();
+
+        Items items = new Items(slug, name, quantity, image, price, _id, indexColor, indexSize, color, size);
+        List<Items> mListItems = new ArrayList<>();
+        mListItems.add(items);
+        bottomSheetView.PassItemOrder(mListItems);
+    }
+
     @Override
     public void getNumProductAvailable(int number) {
-        if(!check){
+        if(check == 0){
             if(numberIncreased > number){
                 bottomSheetView.DisplayQuantityError("Sản phẩm đã hết hàng");
             }
             else {
                 bottomSheetView.DisplayQuantity(String.valueOf(numberIncreased));
             }
-        }else {
+        }else if(check == 1){
             if(numberfillin > number){
                 bottomSheetView.DisplayQuantityError("Đã vượt quá số lượng hiện có");
                 bottomSheetView.DisplayQuantity(String.valueOf(number));
             }else {
                 bottomSheetView.DisplayQuantity(String.valueOf(numberfillin));
             }
+            check = 0;
+        }else if(check == 2){
+            if(numberUpdate > number){
+                ShopProjectDatabase.getInstance(mContext).itemCartDAO().updateQuantityItemCart(email, this.product.getSlug(), this.size, number);
+            }else {
+                ShopProjectDatabase.getInstance(mContext).itemCartDAO().updateQuantityItemCart(email, this.product.getSlug(), this.size, numberUpdate);
+            }
+            check = 0;
         }
-        check = false;
     }
 
     @Override

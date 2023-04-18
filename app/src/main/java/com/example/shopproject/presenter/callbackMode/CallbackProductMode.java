@@ -3,6 +3,7 @@ package com.example.shopproject.presenter.callbackMode;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.SearchResponse;
+import com.example.shopproject.mode.orderResponse;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ public interface CallbackProductMode {
     default void getNumProductAvailable(int number){};
     default void getSearchResponseSuccess(SearchResponse searchResponse){};
     default void getListCartSuccess(List<Items> listItems){};
+    default void ordersSuccess(orderResponse orderResponse){};
 }

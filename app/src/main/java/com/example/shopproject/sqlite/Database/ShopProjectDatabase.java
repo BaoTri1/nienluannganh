@@ -8,10 +8,12 @@ import androidx.room.RoomDatabase;
 
 import com.example.shopproject.sqlite.DAO.AccountDAO;
 import com.example.shopproject.sqlite.DAO.SearchHistoryDAO;
+import com.example.shopproject.sqlite.DAO.itemCartDAO;
 import com.example.shopproject.sqlite.Entity.Account;
 import com.example.shopproject.sqlite.Entity.SearchHistory;
+import com.example.shopproject.sqlite.Entity.itemCart;
 
-@Database(entities = {SearchHistory.class, Account.class}, version = 2)
+@Database(entities = {SearchHistory.class, Account.class, itemCart.class}, version = 3)
 public  abstract class ShopProjectDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "shop.db";
@@ -30,5 +32,7 @@ public  abstract class ShopProjectDatabase extends RoomDatabase {
     public abstract SearchHistoryDAO searchHistoryDAO();
 
     public abstract AccountDAO accountDAO();
+
+    public abstract itemCartDAO itemCartDAO();
 
 }

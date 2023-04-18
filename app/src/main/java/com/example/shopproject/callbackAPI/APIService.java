@@ -3,11 +3,15 @@ package com.example.shopproject.callbackAPI;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.LoginRequest;
+import com.example.shopproject.mode.OrderRequest;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.RegisterRequest;
 import com.example.shopproject.mode.SearchResponse;
+import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.mode.User;
+import com.example.shopproject.mode.orderResponse;
 import com.example.shopproject.orther_handle.Publics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +28,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -95,6 +101,9 @@ public interface APIService {
                                        @Query("price") String price,
                                        @Query("rating") String rating,
                                        @Query("order") String order);
+
+    @POST("/api/orders")
+    Call<orderResponse> postOrder(@Header("authorization") String header, @Body OrderRequest orderRequest);
 
 }
 

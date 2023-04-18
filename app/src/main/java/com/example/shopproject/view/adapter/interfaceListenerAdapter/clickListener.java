@@ -3,6 +3,7 @@ package com.example.shopproject.view.adapter.interfaceListenerAdapter;
 import com.example.shopproject.mode.Color;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.Product;
+import com.example.shopproject.mode.ShippingMethod;
 import com.example.shopproject.mode.Size;
 
 public interface clickListener {
@@ -22,4 +23,6 @@ public interface clickListener {
     default void addYeuThich(Items items){};
     default  void decrement(Items items){};
     default void increment(Items items){};
+
+    default void onClickShippingMethod(ShippingMethod shippingMethod){};
 }

@@ -13,5 +13,6 @@ public interface BottomSheetView {
     void DisplayQuantityError(String message);
     void DisplayImgageDialog(String image);
     void PassItemCart(Items items);
+    void PassItemOrder(List<Items> items);
     void DisplayError(String message);
 }

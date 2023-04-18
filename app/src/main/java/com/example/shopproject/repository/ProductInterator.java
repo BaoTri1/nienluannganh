@@ -8,9 +8,15 @@ import android.util.Log;
 import com.example.shopproject.R;
 import com.example.shopproject.callbackAPI.APIService;
 import com.example.shopproject.mode.Items;
+import com.example.shopproject.mode.OrderRequest;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.SearchResponse;
+import com.example.shopproject.mode.ShippingAddress;
+import com.example.shopproject.mode.orderResponse;
+import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.callbackMode.CallbackProductMode;
+import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
+import com.example.shopproject.sqlite.Entity.itemCart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -253,7 +259,50 @@ public class ProductInterator implements ProductRepository{
     @Override
     public void getListCart() {
         List<Items> list = new ArrayList<>();
+        String email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+        Log.e("Tri", "vô đây mà ở ngoài");
+        List<itemCart> listItemCart = ShopProjectDatabase.getInstance(mContext).itemCartDAO().getListItemCart(email);
+        for(int i = 0 ;i< listItemCart.size(); i++){
+            String slug = listItemCart.get(i).getSlug();
+            String name = listItemCart.get(i).getName();
+            String image = listItemCart.get(i).getImage();
+            int price = listItemCart.get(i).getPrice();
+            String _id = listItemCart.get(i).get_id();
+            int quantity = listItemCart.get(i).getQuantity();
+            int indexColor = listItemCart.get(i).getIndexColor();
+            int indexSize = listItemCart.get(i).getIndexSize();
+            String color = listItemCart.get(i).getColor();
+            String size = listItemCart.get(i).getSize();
+
+            Log.e("Tri", "vô đây ");
+
+            Items items = new Items(slug, name, quantity, image, price, _id, indexColor, indexSize, color, size);
+            list.add(items);
+        }
         callbackProductMode.getListCartSuccess(list);
+    }
+
+    @Override
+    public void PostOrders(List<Items> items, ShippingAddress shippingAddress, String paymentMethod, int toltalPriceProcuct, int shippingPrice, int taxPrice, int toltalPayment) {
+        Log.e("Tri", "post order nhung o ngoai");
+        OrderRequest request = new OrderRequest(items, shippingAddress, paymentMethod, toltalPriceProcuct, shippingPrice, 0, toltalPayment);
+        APIService.apiService.postOrder(Publics.GetToken(mContext), request).enqueue(new Callback<orderResponse>() {
+            @Override
+            public void onResponse(Call<orderResponse> call, Response<orderResponse> response) {
+                if(response.isSuccessful()){
+                    orderResponse result = response.body();
+                    Log.e("Tri", "post order");
+                    callbackProductMode.ordersSuccess(result);
+                }else {
+                    callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<orderResponse> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi. Call API thất bại!" + call.toString());
+            }
+        });
     }
 
 }

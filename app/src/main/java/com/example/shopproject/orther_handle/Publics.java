@@ -17,6 +17,9 @@ import java.util.regex.Pattern;
 
 public class Publics {
 
+    public static final String PAYMENT_NOMAL = "Thanh toán khi nhận hàng";
+    public static final String PAYMENT_ONLINE = "Thanh toán bằng thẻ tín dụng";
+
     public static SharedPreferences PreLoginInfor;
     public static final String LOGININFOR_NAME = "LoginInfor";
 
@@ -55,6 +58,11 @@ public class Publics {
     public static boolean isNameVaild(String name){
         Pattern pattern = Pattern.compile("^[a-zA-Z-]{3,16}$");
         return pattern.matcher(name).matches();
+    }
+
+    //"2023-04-18T15:07:11.395Z"
+    public static String formatDate(String date){
+        return date.substring(8, 10) + "/" + date.substring(5, 7) + "/" + date.substring(0, 4);
     }
 
     public static String formatGia(int gia){

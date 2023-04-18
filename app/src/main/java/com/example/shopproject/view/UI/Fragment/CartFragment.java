@@ -28,6 +28,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.shopproject.R;
 import com.example.shopproject.mode.Items;
+import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.CartPresenter;
 import com.example.shopproject.view.CartView;
@@ -36,11 +37,14 @@ import com.example.shopproject.view.UI.PayMentActivity;
 import com.example.shopproject.view.adapter.CartAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, CartView {
 
     private static final String ITEMS_KEY = "items_object_key";
+    private static final String LIST_ITEMS_KEY = "list_items_key";
+
     private Toolbar toolbar;
     private RecyclerView rcv_giohang;
     private CartAdapter adapter;
@@ -64,18 +68,17 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         myView = inflater.inflate(R.layout.cart_fragmet_layout, container, false);
 
         initView();
-
         mainActivity = (MainActivity) getActivity();
+
         cartPresenter = new CartPresenter(getActivity(), this);
         cartPresenter.getListCart();
+
 
         toolbar.setTitle("Giỏ hàng của bạn");
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_gia));
 
         //Đăng ký để nhận dữ liệu thông qua callbackFragment
-        Log.e("Tri", "onCraeteView Cart");
-
         btnGoHome.setOnClickListener(view -> {
             mainActivity.GoHomeFragment();
         });
@@ -87,6 +90,10 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         btnXoaALL.setOnClickListener(view -> {
             cartPresenter.deleteAllItems();
+        });
+
+        btnThanhToan.setOnClickListener(view -> {
+            cartPresenter.CheckoutCart();
         });
 
         return myView;
@@ -115,12 +122,14 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();Log.e("Tri", "onStart Cart");
+        cartPresenter.setIconNumItem();
     }
 
     @Override
     public void onRefresh() {
+        cartPresenter.getListCart();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -137,6 +146,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             layoutMain.setVisibility(View.GONE);
             return;
         }
+        layoutMuaSam.setVisibility(View.GONE);
         adapter = new CartAdapter(getActivity(), listItems, new clickListener() {
             @Override
             public void deleteItem(Items items) {
@@ -155,7 +165,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             @Override
             public void increment(Items items) {
-                clickListener.super.increment(items);
+                cartPresenter.incrementQuantity(items);
             }
         });
 
@@ -220,6 +230,22 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void DisplayNumProduct(int num) {
         txtSLGioHang.setText(num + " sản phẩm");
+    }
+
+    @Override
+    public void DisplayIconNumItem(int num) {
+        mainActivity.setIconforItemBottomNavigation(2, num);
+        Log.e("Tri", "set icon: " + num);
+    }
+
+    @Override
+    public void CheckoutCart(List<Items> listItems) {
+        Intent intent = new Intent(getActivity(), PayMentActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("PAYMENT_KEY", true);
+        bundle.putSerializable(LIST_ITEMS_KEY, (Serializable) listItems);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

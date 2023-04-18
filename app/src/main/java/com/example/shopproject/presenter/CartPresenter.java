@@ -1,6 +1,5 @@
 package com.example.shopproject.presenter;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.util.Log;
 
@@ -8,6 +7,7 @@ import com.example.shopproject.mode.Items;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.callbackMode.CallbackProductMode;
 import com.example.shopproject.repository.ProductInterator;
+import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
 import com.example.shopproject.view.CartView;
 
 import java.util.ArrayList;
@@ -36,7 +36,6 @@ public class CartPresenter implements CallbackProductMode {
     public void getListCart(){
         if(Publics.isNetWorkAvaliable(mContext)){
             productInterator.getListCart();
-            Log.e("Tri", " cartPresenter");
         }else {
             cartView.DisplayNoNetWork("Đã xảy ra lỗi. Hãy kiểm tra lại kết nối mạng!");
         }
@@ -109,12 +108,17 @@ public class CartPresenter implements CallbackProductMode {
 
     public void deleteAllItems(){
         this.mList.clear();
+        ShopProjectDatabase.getInstance(mContext).itemCartDAO().deleteAllItemCart();
+        setIconNumItem();
         cartView.DisplaytotlalPrice(ToltalPrice(this.mList));
         cartView.DisplayListCartUdated(mList);
     }
 
     public void deleteItemsCart(Items items){
         this.mList.remove(items);
+        String email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+        ShopProjectDatabase.getInstance(mContext).itemCartDAO().deleteItemCart(items.getSlug(), email, items.getSize());
+        setIconNumItem();
         cartView.DisplaytotlalPrice(ToltalPrice(this.mList));
         cartView.DisplayListCartUdated(mList);
         cartView.DisplayNumProduct(this.mList.size());
@@ -138,6 +142,8 @@ public class CartPresenter implements CallbackProductMode {
                     if(mList.get(i).getIndexSize() == items.getIndexSize()){
                         Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
                         mList.get(i).setQuantity(mList.get(i).getQuantity() - 1);
+                        String email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+                        ShopProjectDatabase.getInstance(mContext).itemCartDAO().updateQuantityItemCart(email,mList.get(i).getSlug(), mList.get(i).getSize(), mList.get(i).getQuantity());
                     }
                 }
             }
@@ -158,6 +164,20 @@ public class CartPresenter implements CallbackProductMode {
                 productInterator.getCountSize(items.getSlug(), items.getIndexColor(), items.getIndexSize());
             }
         }
+    }
+
+    public void CheckoutCart(){
+        cartView.CheckoutCart(this.mList);
+    }
+
+    public void setIconNumItem(){
+        String email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+        int num = ShopProjectDatabase.getInstance(mContext).itemCartDAO().getNumItemCart(email);
+        Log.e("Tri", String.valueOf(num));
+        cartView.DisplayIconNumItem(num);
+//        if(num != 0){
+//            cartView.DisplayIconNumItem(num);
+//        }
     }
 
     @Override
@@ -181,6 +201,8 @@ public class CartPresenter implements CallbackProductMode {
                             if(mList.get(i).getIndexSize() == this.itemsTmp.getIndexSize()){
                                 Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
                                 mList.get(i).setQuantity(numberIncreased);
+                                String email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+                                ShopProjectDatabase.getInstance(mContext).itemCartDAO().updateQuantityItemCart(email,mList.get(i).getSlug(), mList.get(i).getSize(), numberIncreased);
                             }
                         }
                     }
@@ -198,6 +220,8 @@ public class CartPresenter implements CallbackProductMode {
                         if(mList.get(i).getIndexSize() == this.itemsTmp.getIndexSize()){
                             Log.e("Tri", mList.get(i).getName() + "co so luong: " + mList.get(i).getQuantity());
                             mList.get(i).setQuantity(quantityUpdate);
+                            String email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+                            ShopProjectDatabase.getInstance(mContext).itemCartDAO().updateQuantityItemCart(email,mList.get(i).getSlug(), mList.get(i).getSize(), quantityUpdate);
                         }
                     }
                 }

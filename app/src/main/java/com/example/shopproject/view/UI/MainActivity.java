@@ -10,16 +10,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.shopproject.R;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.orther_handle.AccountManagement;
+import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
 import com.example.shopproject.sqlite.Entity.Account;
 import com.example.shopproject.view.UI.Fragment.CartFragment;
 import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
 import com.example.shopproject.view.adapter.ViewPagerAdapter;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -55,6 +58,13 @@ public class MainActivity extends AppCompatActivity{
 
         //set sự kiện click cho BottomNavigation
         BottomNavigationClick();
+
+//        String email = ShopProjectDatabase.getInstance(this).accountDAO().getEmail();
+//        int num = ShopProjectDatabase.getInstance(this).itemCartDAO().getNumItemCart(email);
+//        Log.e("Tri", String.valueOf(num));
+//        if(num != 0){
+//            setIconforItemBottomNavigation(R.id.action_cart, 2);
+//        }
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -136,7 +146,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void setIconforItemBottomNavigation(int idItem, int number){
-        navigationView.getOrCreateBadge(idItem).setNumber(number);
+        Menu menu = navigationView.getMenu();
+        MenuItem menuItem = menu.getItem(idItem);
+        BadgeDrawable badgeDrawable = navigationView.getOrCreateBadge(menuItem.getItemId());
+        if(number == 0){
+            badgeDrawable.setVisible(false);
+        }else {
+            badgeDrawable.setVisible(true);
+            badgeDrawable.setNumber(number);
+        }
     }
 
     public void GoHomeFragment(){

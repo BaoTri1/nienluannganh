@@ -157,6 +157,20 @@
                     android:textStyle="italic" />
 
                 <TextView
+                    android:id="@+id/txttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtshippingMethod"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+
+                <TextView
                     android:id="@+id/lblmemo_shippingMethod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -372,10 +386,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lbl_ToltalPayment"
-                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_toStartOf="@+id/btnOrder"
-                    android:drawablePadding="10dp"
                     android:padding="5dp"
                     android:text=""
                     android:textColor="@color/color_gia"
@@ -386,6 +398,7 @@
                     android:id="@+id/btnOrder"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
                     android:layout_alignParentEnd="true"
                     android:background="@color/color_gia"
                     android:padding="10dp"

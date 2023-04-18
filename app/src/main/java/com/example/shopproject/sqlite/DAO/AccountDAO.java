@@ -22,6 +22,9 @@ public interface AccountDAO {
     @Query("SELECT login FROM Account where email = :email")
     boolean checkLogin(String email);
 
+    @Query("SELECT email FROM Account")
+    String getEmail();
+
     @Query("Update Account set login = :state where email = :email")
     void setStateFalseLogin(String email, boolean state);
 

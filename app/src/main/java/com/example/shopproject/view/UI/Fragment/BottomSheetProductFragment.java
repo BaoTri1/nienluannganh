@@ -37,9 +37,11 @@ import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.BottomSheetPresenter;
 import com.example.shopproject.view.BottomSheetView;
+import com.example.shopproject.view.UI.EditAddressActivity;
 import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
 import com.example.shopproject.view.UI.LoginActivity;
 import com.example.shopproject.view.UI.MainActivity;
+import com.example.shopproject.view.UI.PayMentActivity;
 import com.example.shopproject.view.adapter.ColorAdapter;
 import com.example.shopproject.view.adapter.SizeAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
@@ -48,10 +50,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.stfalcon.imageviewer.StfalconImageViewer;
 import com.stfalcon.imageviewer.loader.ImageLoader;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
 public class BottomSheetProductFragment extends BottomSheetDialogFragment implements BottomSheetView {
+
+    private static final String LIST_ITEMS_KEY = "list_items_key";
 
     private String slug;
     private String typeButton;
@@ -83,7 +88,6 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
         this.context = context;
         this.typeButton = typeButton;
         this.slug = slug;
-        //callbackFragment = (CallbackFragment) getActivity();
         this.bottomSheetPresenter = new BottomSheetPresenter(context, this);
     }
 
@@ -114,6 +118,7 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
             btnAction.setOnClickListener(view -> {
                 int quatity = Integer.parseInt(editDisplay.getText().toString().trim());
                 bottomSheetPresenter.addCart(quatity, colorName, sizeName, indexColor, indexSize);
+                bottomSheetPresenter.saveItemCart(quatity, colorName, sizeName, indexColor, indexSize);
                 DisplayMessage();
                 bottomSheetDialog.dismiss();
             });
@@ -123,17 +128,16 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
             btnAction.setOnClickListener(view -> {
                 int quatity = Integer.parseInt(editDisplay.getText().toString().trim());
                 Toast.makeText(getActivity(), typeButton, Toast.LENGTH_SHORT).show();
+                bottomSheetPresenter.createItemOrder(quatity, colorName, sizeName, indexColor, indexSize);
                 bottomSheetDialog.dismiss();
             });
         }
 
         btnDecrement.setOnClickListener(view -> {
-            //int quatity = Integer.parseInt(editDisplay.getText().toString().trim());
             bottomSheetPresenter.decrementQuantity(NumProduct);
         });
 
         btnIncrement.setOnClickListener(view -> {
-            //int quatity = Integer.parseInt(editDisplay.getText().toString().trim());
             bottomSheetPresenter.incrementQuantity(slug, NumProduct, indexColor, indexSize);
         });
 
@@ -209,7 +213,7 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
     public void DisplayColorsAndSize(List<Color> colors) {
         indexColor = -1;
         indexSize = -1;
-        if(colors.isEmpty() || colors == null){
+        if(colors == null || colors.isEmpty()){
             layoutColor.setVisibility(View.GONE);
             layoutSize.setVisibility(View.GONE);
             return;
@@ -220,7 +224,7 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
                 indexColor = index;
                 colorName= color.getName();
                 txtColor.setText("Màu sắc: " + color.getName());
-                if(color.getSize().isEmpty() || color.getSize() == null){
+                if(color.getSize() == null || color.getSize().isEmpty()){
                     layoutSize.setVisibility(View.GONE);
                     return;
                 }
@@ -287,6 +291,17 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
     public void PassItemCart(Items items) {
         callbackFragment.AddCartSuccess(items);
     }
+
+    @Override
+    public void PassItemOrder(List<Items> items) {
+        Intent intent = new Intent(getActivity(), PayMentActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("PAYMENT_KEY", false);
+        bundle.putSerializable(LIST_ITEMS_KEY, (Serializable) items);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 
     @Override
     public void DisplayError(String message) {

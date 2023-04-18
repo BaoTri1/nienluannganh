@@ -3,6 +3,7 @@ package com.example.shopproject.view.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -40,7 +41,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     if(response.isSuccessful()){
                         user = response.body();
+                        Log.e("Tri", user.getToken());
                         Publics.SaveToken(SplashScreenActivity.this, user.getToken());
+                        Log.e("Tri", "Token da luu: " + Publics.GetToken(SplashScreenActivity.this));
                     }else {
                         message = "Đã xảy ra lỗi khi đăng nhập";
                         AccountManagement.setFalseLoginState(SplashScreenActivity.this, account.getEmail(), false);
