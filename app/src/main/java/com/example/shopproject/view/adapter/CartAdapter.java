@@ -60,7 +60,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         Glide.with(mContext)
                 .load(items.getImage())
-                .placeholder(R.mipmap.anh2)
+                .placeholder(R.mipmap.imgloadwait)
                 .into(holder.imgSP);
 
         holder.txtNameSP.setText(items.getName());

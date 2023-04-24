@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.UI.ReviewActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/AppBarLayout_review"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/ToolBar_review"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/lblRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AppBarLayout_review"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="Đáng giá sản phẩm"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layoutRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_below="@+id/lblRating">
+
+        <CheckBox
+            android:id="@+id/btn_rate_1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_rate"
+            android:button="@null"/>
+
+        <CheckBox
+            android:id="@+id/btn_rate_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_rate"
+            android:button="@null"/>
+
+        <CheckBox
+            android:id="@+id/btn_rate_3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_rate"
+            android:button="@null"/>
+
+        <CheckBox
+            android:id="@+id/btn_rate_4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_rate"
+            android:button="@null"/>
+
+        <CheckBox
+            android:id="@+id/btn_rate_5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_rate"
+            android:button="@null"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblWriteRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutRate"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="Bình luận về sản phẩm"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editCommment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:hint="Viết đánh giá về sản phẩm"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/lblWriteRate"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSaveReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editCommment"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/black"
+        android:padding="5dp"
+        android:text="Lưu đáng giá"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</RelativeLayout>

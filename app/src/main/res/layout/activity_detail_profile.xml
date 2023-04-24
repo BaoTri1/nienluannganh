@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.UI.ChiTIetHoSo_Activity">
+    tools:context=".view.UI.DetailProfile_Activity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                     android:maxLength="100"
                     android:paddingTop="10dp"
                     android:paddingEnd="20dp"
-                    android:text="@string/app_name"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="15sp"/>
@@ -127,7 +127,7 @@
                     android:enabled="false"
                     android:paddingTop="10dp"
                     android:paddingEnd="20dp"
-                    android:text="@string/app_name"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -156,7 +156,7 @@
                     android:imeOptions="actionDone"
                     android:paddingTop="10dp"
                     android:paddingEnd="20dp"
-                    android:text="@string/_0123456789"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -182,7 +182,7 @@
                     android:enabled="false"
                     android:paddingTop="10dp"
                     android:paddingEnd="20dp"
-                    android:text="@string/txtNam"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -208,7 +208,7 @@
                     android:enabled="false"
                     android:paddingTop="10dp"
                     android:paddingEnd="20dp"
-                    android:text="@string/txtNgaySinh"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -237,7 +237,7 @@
                     android:inputType="textEmailAddress"
                     android:paddingTop="10dp"
                     android:paddingEnd="20dp"
-                    android:text="@string/abc_gmail_com"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="15sp" />

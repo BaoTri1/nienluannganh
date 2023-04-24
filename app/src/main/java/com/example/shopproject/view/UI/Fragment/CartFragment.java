@@ -125,10 +125,12 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onStart() {
         super.onStart();Log.e("Tri", "onStart Cart");
         cartPresenter.setIconNumItem();
+        cartPresenter.getListCart();
     }
 
     @Override
     public void onRefresh() {
+        adapter = null;
         cartPresenter.getListCart();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -147,6 +149,7 @@ public class CartFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             return;
         }
         layoutMuaSam.setVisibility(View.GONE);
+        layoutMain.setVisibility(View.VISIBLE);
         adapter = new CartAdapter(getActivity(), listItems, new clickListener() {
             @Override
             public void deleteItem(Items items) {

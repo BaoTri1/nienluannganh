@@ -226,8 +226,8 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
                 bundle.putString("TYPE_KEY", "Category");
                 bundle.putString("KEYWORK_KEY", category);
                 intent.putExtras(bundle);
-                //startActivity(intent);
-                startActivityForResult(intent, OPEN_CART);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
@@ -246,9 +246,10 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
                 Intent intentDetailProduct = new Intent(getActivity(), DetailProductActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("slug", product.getSlug());
+                bundle.putSerializable("USER_KEY", mainActivity.getUser());
                 intentDetailProduct.putExtras(bundle);
-//                startActivity(intentDetailProduct);
-                startActivityForResult(intentDetailProduct, ADD_CART_SUCCESS);
+                startActivity(intentDetailProduct);
+                getActivity().finish();
             }
 
             @Override
@@ -290,25 +291,6 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
         });
         dialogNetWork.setMessage(message);
         dialogNetWork.create().show();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == ADD_CART_SUCCESS && resultCode == Activity.RESULT_OK){
-            Bundle bundle = data.getExtras();
-            if(bundle != null) {
-                if((Items) bundle.getSerializable("ITEMS_KEY") != null)
-                    mainActivity.addItemCart((Items) bundle.getSerializable("ITEMS_KEY"));
-                String action = bundle.getString("Action", "");
-                if(action.equals("AddItemAndOpenCart")){
-                    mainActivity.GoCartFragment();
-                }
-            }
-        }
-        else if(requestCode == OPEN_CART && resultCode == Activity.RESULT_OK){
-            mainActivity.GoCartFragment();
-        }
     }
 
     @Override

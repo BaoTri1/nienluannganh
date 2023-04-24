@@ -22,6 +22,9 @@ public interface AccountDAO {
     @Query("SELECT login FROM Account where email = :email")
     boolean checkLogin(String email);
 
+    @Query("SELECT _id FROM Account")
+    String getIdUser();
+
     @Query("SELECT email FROM Account")
     String getEmail();
 

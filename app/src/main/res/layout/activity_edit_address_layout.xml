@@ -169,12 +169,24 @@
             android:layout_marginStart="10dp"
             android:background="@android:color/transparent" />
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cboxSaveAddress"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/spinnerWards"
+            android:text="Lưu địa chỉ"/>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnConfrim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerWards"
-            android:layout_margin="10dp"
+            android:layout_below="@+id/cboxSaveAddress"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/black"
             android:text="Xác nhận"
             android:textColor="@color/white"

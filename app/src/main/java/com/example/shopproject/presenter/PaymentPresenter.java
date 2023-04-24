@@ -1,15 +1,28 @@
 package com.example.shopproject.presenter;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.res.ResourcesCompat;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.example.shopproject.R;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.mode.orderResponse;
+import com.example.shopproject.orther_handle.MyApplication;
 import com.example.shopproject.presenter.Handle.CallbackPayment;
 import com.example.shopproject.presenter.Handle.Payment;
 import com.example.shopproject.orther_handle.Publics;
@@ -19,6 +32,9 @@ import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
 import com.example.shopproject.view.PayMentView;
 import com.example.shopproject.view.UI.DetailOrderActicity;
 
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Date;
 import java.util.List;
 
 public class PaymentPresenter implements CallbackPayment, CallbackProductMode {
@@ -45,7 +61,7 @@ public class PaymentPresenter implements CallbackPayment, CallbackProductMode {
 
     public void ReceiveShippingAddress(ShippingAddress shippingAddress){
         this.shippingAddress = shippingAddress;
-        payMentView.DisplayShippingAddress(shippingAddress.getFullName(), shippingAddress.getSDT(), shippingAddress.getAddress());
+        payMentView.DisplayShippingAddress(shippingAddress.getFullName(), shippingAddress.getPhone(), shippingAddress.getAddress());
     }
 
     public void ReceiveListItemOrder(boolean islistCart, List<Items> mList){
@@ -100,9 +116,33 @@ public class PaymentPresenter implements CallbackPayment, CallbackProductMode {
                 public void run() {
                     dialog.dismiss();
                 }
-            }, 5500);
+            }, 6500);
         }
     }
+
+    private void CreatNotification(Context context, String contentMessenger, String sender) {
+        Glide.with(context)
+                .asBitmap()
+                .load(R.drawable.cart_add_buy_svgrepo_com)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        Notification mBuilder = new NotificationCompat.Builder(context, MyApplication.CHANNEL_ID)
+                                .setSmallIcon(R.drawable.logo_app)
+                                .setContentTitle(contentMessenger)
+                                .setContentText(sender)
+                                .setLargeIcon(resource)
+                                .build();
+                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.notify(getNotificationID(), mBuilder);
+                    }
+                });
+    }
+
+    private int getNotificationID() {
+        return (int) new Date().getTime();
+    }
+
 
     @Override
     public void PaymentByCardSuccess(String message) {
@@ -123,6 +163,7 @@ public class PaymentPresenter implements CallbackPayment, CallbackProductMode {
     @Override
     public void ordersSuccess(orderResponse orderResponse) {
         Toast.makeText(mContext, orderResponse.getMessage(), Toast.LENGTH_SHORT).show();
+        CreatNotification(mContext, orderResponse.getMessage(),"Đơn hàng " + orderResponse.getOrder().get_id() + " của bạn đã được tạo thành công.");
         payMentView.OpenDetailOrder(this.nameMethodPayment ,orderResponse);
         if(islistCart){
             ShopProjectDatabase.getInstance(mContext).itemCartDAO().deleteAllItemCart();

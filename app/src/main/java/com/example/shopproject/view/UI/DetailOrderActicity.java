@@ -1,5 +1,6 @@
 package com.example.shopproject.view.UI;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.shopproject.R;
+import com.example.shopproject.mode.Orders;
 import com.example.shopproject.mode.orderResponse;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.view.adapter.OrderItemAdapter;
@@ -52,30 +55,37 @@ public class DetailOrderActicity extends AppCompatActivity {
 
         Bundle bundleReceice = getIntent().getExtras();
         if(bundleReceice != null){
+            String type = bundleReceice.getString("TYPE_RECEIVE_KEY");
             String nameMethodPayment = bundleReceice.getString("PAYMENT_METHOD");
-            DisplayDetailOrder(nameMethodPayment, (orderResponse) bundleReceice.getSerializable("ORDER_RESPONSE"));
+            if(type.equals("ORDERS_RESPONSE")){
+                orderResponse response = (orderResponse) bundleReceice.getSerializable("ORDER_RESPONSE");
+                DisplayDetailOrder(nameMethodPayment, response.getOrder());
+            }else if(type.equals("ORDERS_DETAIL")){
+                Orders orders = (Orders) bundleReceice.getSerializable("ORDERS");
+                DisplayDetailOrder(nameMethodPayment, orders);
+            }
         }
     }
 
-    private void DisplayDetailOrder(String nameMethodPayment, orderResponse response) {
-        adapter = new OrderItemAdapter(this, response.getOrder().getOrderItems());
+    private void DisplayDetailOrder(String nameMethodPayment, Orders orders) {
+        adapter = new OrderItemAdapter(this, orders.getOrderItems());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcv_items.setLayoutManager(layoutManager);
         rcv_items.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
         rcv_items.setAdapter(adapter);
 
-        txttoltalItems.setText(Publics.formatGia(response.getOrder().getItemsPrice()));
-        txtPriceShipping.setText(Publics.formatGia(response.getOrder().getShippingPrice()));
-        txtToltalBill.setText(Publics.formatGia(response.getOrder().getTotalPrice()));
+        txttoltalItems.setText(Publics.formatGia(orders.getItemsPrice()));
+        txtPriceShipping.setText(Publics.formatGia(orders.getShippingPrice()));
+        txtToltalBill.setText(Publics.formatGia(orders.getTotalPrice()));
         txtPayment.setText(nameMethodPayment);
 
-        txtID.setText(response.getOrder().get_id());
-        txtName_phone.setText(response.getOrder().getShippingAddress().getFullName());
-        txtAddress.setText(response.getOrder().getShippingAddress().getAddress());
+        txtID.setText(orders.get_id());
+        txtName_phone.setText(orders.getShippingAddress().getFullName() + " | " + orders.getShippingAddress().getPhone());
+        txtAddress.setText(orders.getShippingAddress().getAddress());
 
-        txtDateCreate.setText(Publics.formatDate(response.getOrder().getCreateAt()));
+        txtDateCreate.setText(Publics.formatDate(orders.getCreateAt()));
 
-        if(response.getOrder().isDelivered()){
+        if(orders.isDelivered()){
             txtDelivered.setText("Đã giao hàng");
         }else {
             txtDelivered.setText("Chưa giao hàng");
@@ -95,5 +105,16 @@ public class DetailOrderActicity extends AppCompatActivity {
         txtAddress = findViewById(R.id.txtAddress);
         txtID = findViewById(R.id.txtId);
         btnClose = findViewById(R.id.btnClose);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return true;
     }
 }

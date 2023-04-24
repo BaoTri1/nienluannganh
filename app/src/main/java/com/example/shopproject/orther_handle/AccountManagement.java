@@ -10,8 +10,8 @@ public class AccountManagement {
 
     public static Account account;
 
-    public static void saveAccount(Context context, String email, String password, boolean loginState){
-        ShopProjectDatabase.getInstance(context).accountDAO().insertAccount(new Account(email, password, loginState));
+    public static void saveAccount(Context context, String _id, String email, String password, boolean loginState){
+        ShopProjectDatabase.getInstance(context).accountDAO().insertAccount(new Account(_id, email, password, loginState));
     }
 
     public static boolean checkStateLogin(Context context){

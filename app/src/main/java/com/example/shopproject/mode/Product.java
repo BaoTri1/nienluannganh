@@ -16,7 +16,7 @@ public class Product implements Serializable {
     private int numReviews;
     private String description;
     private List<Review> reviews;
-    private List<Color> color;
+    private List<Color> colors;
 
     private int idImg;
 
@@ -38,7 +38,7 @@ public class Product implements Serializable {
         this.numReviews = numReviews;
         this.description = description;
         this.reviews = reviews;
-        this.color = color;
+        this.colors = color;
     }
 
     public String get_id() {
@@ -138,10 +138,10 @@ public class Product implements Serializable {
     }
 
     public List<Color> getColor() {
-        return color;
+        return colors;
     }
 
     public void setColor(List<Color> color) {
-        this.color = color;
+        this.colors = color;
     }
 }

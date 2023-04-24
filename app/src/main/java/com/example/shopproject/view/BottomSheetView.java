@@ -12,7 +12,7 @@ public interface BottomSheetView {
     void DisplayQuantity(String quantity);
     void DisplayQuantityError(String message);
     void DisplayImgageDialog(String image);
-    void PassItemCart(Items items);
+    void updateBadge(int number);
     void PassItemOrder(List<Items> items);
     void DisplayError(String message);
 }

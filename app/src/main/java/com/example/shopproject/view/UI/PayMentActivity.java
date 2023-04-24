@@ -18,8 +18,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ import java.util.List;
 public class PayMentActivity extends AppCompatActivity implements PayMentView, CallbackFragment {
 
     private static final int SHIPPING_ADDRESS_REQUEST = 1;
+    private static final int SHIPPING_ADDRESS_SELECT = 2;
     private static final String SHIPPING_ADDRESS_KEY = "shipping_address_key";
     private static final String LIST_ITEMS_KEY = "list_items_key";
 
@@ -87,8 +90,29 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
         paymentPresenter.ReceiveListItemOrder(getIntent().getBooleanExtra("PAYMENT_KEY", false) ,(List<Items>) getIntent().getSerializableExtra(LIST_ITEMS_KEY));
 
         btnFillInAddress.setOnClickListener(view ->{
-            Intent intent = new Intent(this, EditAddressActivity.class);
-            startActivityForResult(intent, SHIPPING_ADDRESS_REQUEST);
+            PopupMenu popupMenu = new PopupMenu(this, btnFillInAddress);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_select_address, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @SuppressLint("NonConstantResourceId")
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    Intent intent = new Intent(PayMentActivity.this, EditAddressActivity.class);
+                    switch (menuItem.getItemId()){
+                        case R.id.action_SelectAddress:
+                            Intent intent1 = new Intent(PayMentActivity.this, ListAddressActicity.class);
+                            startActivityForResult(intent1, SHIPPING_ADDRESS_SELECT);
+                            break;
+
+                        case R.id.action_FillinAddress:
+                            Intent intent2 = new Intent(PayMentActivity.this, EditAddressActivity.class);
+                            startActivityForResult(intent2, SHIPPING_ADDRESS_REQUEST);
+                            break;
+                    }
+                    return true;
+                }
+            });
+            popupMenu.show();
+
         });
 
         btnSelectShippingMethod.setOnClickListener(v -> {
@@ -115,7 +139,7 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
                 return;
             }
             paymentPresenter.makePayments(txtPayment.getText().toString().trim());
-            Toast.makeText(this, "thanh toán", Toast.LENGTH_SHORT).show();
+
         });
 
     }
@@ -124,9 +148,9 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK && requestCode == SHIPPING_ADDRESS_REQUEST){
+        if(resultCode == Activity.RESULT_OK && requestCode == SHIPPING_ADDRESS_REQUEST || requestCode == SHIPPING_ADDRESS_SELECT) {
             Bundle bundle = data.getExtras();
-            if(bundle != null){
+            if (bundle != null) {
                 paymentPresenter.ReceiveShippingAddress((ShippingAddress) bundle.getSerializable(SHIPPING_ADDRESS_KEY));
             }
         }
@@ -211,12 +235,12 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
         finish();
         Intent intent = new Intent(this, DetailOrderActicity.class);
         Bundle bundle = new Bundle();
+        bundle.putString("TYPE_RECEIVE_KEY", "ORDERS_RESPONSE");
         bundle.putString("PAYMENT_METHOD", namePaymentMethod);
         bundle.putSerializable("ORDER_RESPONSE", orderResponse);
         intent.putExtras(bundle);
         startActivity(intent);
     }
-
 
     @Override
     public void DisplayNoNetwork(String message) {

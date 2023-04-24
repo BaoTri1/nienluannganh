@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserRepository {
     void LoginRequest(String email, String password);
     void RegisterRequest(String Name, String email, String password);
-    List<User> getListUser();
+    void getUserById(String id);
 }

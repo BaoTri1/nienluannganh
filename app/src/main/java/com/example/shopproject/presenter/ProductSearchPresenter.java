@@ -1,12 +1,14 @@
 package com.example.shopproject.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.SearchResponse;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.callbackMode.CallbackProductMode;
 import com.example.shopproject.repository.ProductInterator;
+import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
 import com.example.shopproject.view.ProductView;
 
 import java.util.List;
@@ -48,6 +50,12 @@ public class ProductSearchPresenter implements CallbackProductMode {
         }else {
             productView.DisplayNoNetWork("Đã xảy ra lỗi. Vui lòng kiểm tra lại kết nối mạng!");
         }
+    }
+
+    public void setupBadge(){
+        String email = ShopProjectDatabase.getInstance(mContext).accountDAO().getEmail();
+        int number = ShopProjectDatabase.getInstance(mContext).itemCartDAO().getNumItemCart(email);
+        productView.DisplayBadge(number);
     }
 
     @Override

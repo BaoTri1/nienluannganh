@@ -1,12 +1,13 @@
 package com.example.shopproject.view.UI.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,13 +23,20 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.shopproject.R;
+import com.example.shopproject.mode.User;
 import com.example.shopproject.orther_handle.AccountManagement;
-import com.example.shopproject.view.UI.ChiTIetHoSo_Activity;
+import com.example.shopproject.presenter.ProfilePresenter;
+import com.example.shopproject.view.ProfileView;
+import com.example.shopproject.view.UI.DetailProfile_Activity;
+import com.example.shopproject.view.UI.IntroActivity;
+import com.example.shopproject.view.UI.ListAddressActicity;
+import com.example.shopproject.view.UI.ListOrdersHistory;
 import com.example.shopproject.view.UI.LoginActivity;
+import com.example.shopproject.view.UI.MainActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ProfileView {
 
     private View myView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -43,6 +51,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private AppCompatButton btnMoGioiThieu;
     private AppCompatButton btnLogin_out;
     private TextView txtVersion;
+    private ProfilePresenter profilePresenter;
+
 
     /*Thong bao cho tai khoản admin khong co quyen han*/
 
@@ -59,17 +69,17 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         //set version
         setupVersion();
 
+        profilePresenter = new ProfilePresenter(getActivity(), this);
+        profilePresenter.getUser();
+
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_gia));
 
-        //Lấy dữ liệu của người dùng
-        getUsertoServer();
-
-        btnMoThongTin.setOnClickListener(view -> {
-            Toast.makeText(getActivity(), "Mo activity thong tin user", Toast.LENGTH_SHORT).show();
-            Intent intentChiTietHoSo = new Intent(getActivity(), ChiTIetHoSo_Activity.class);
-            startActivity(intentChiTietHoSo);
-        });
+//        btnMoThongTin.setOnClickListener(view -> {
+//            Toast.makeText(getActivity(), "Mo activity thong tin user", Toast.LENGTH_SHORT).show();
+//            Intent intentChiTietHoSo = new Intent(getActivity(), DetailProfile_Activity.class);
+//            startActivity(intentChiTietHoSo);
+//        });
 
         btnLogin_out.setOnClickListener(view ->{
             String typebutton = btnLogin_out.getText().toString().trim();
@@ -84,6 +94,23 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             btnLogin_out.setText("Đăng xuất");
         }
 
+        btnMoDiaChi.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListAddressActicity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("ACTION_KEY", "READ");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+
+        btnMoLSMH.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListOrdersHistory.class);
+            startActivity(intent);
+        });
+
+        btnMoGioiThieu.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), IntroActivity.class);
+            startActivity(intent);
+        });
 
         return myView;
     }
@@ -94,7 +121,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         imgUser = myView.findViewById(R.id.img_user_hoso);
         txtNameUser = myView.findViewById(R.id.txtNameUser_hoso);
         txtEmail = myView.findViewById(R.id.txtEmailUser_hoso);
-        btnMoThongTin = myView.findViewById(R.id.btnThongTinUser_hoso);
+//        btnMoThongTin = myView.findViewById(R.id.btnThongTinUser_hoso);
         btnMoDiaChi  = myView.findViewById(R.id.btnDiaChi_hoso);
         btnMoLSMH = myView.findViewById(R.id.btnLichSuMuaHang_hoso);
         btnMoCaiDatThongBao = myView.findViewById(R.id.btnThongBao_hoso);
@@ -106,18 +133,6 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private void setupToolBar(){
         if(toolbar != null){
             toolbar.setTitle("Hồ sơ");
-            toolbar.inflateMenu(R.menu.contextmenu_home_fragment);
-            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.action_thongbao:
-                            Toast.makeText(getActivity(), "Thông Báo", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                    return true;
-                }
-            });
         }
     }
 
@@ -131,21 +146,11 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }catch (PackageManager.NameNotFoundException e){
             e.printStackTrace();
         }
-
-    }
-
-    private void getUsertoServer() {
-        //Lay du lieu tren server
-
-        //setImageUser
-
-        //setEmailUser
-
     }
 
     @Override
     public void onRefresh() {
-        Toast.makeText(getActivity(), "Refresh Data", Toast.LENGTH_SHORT).show();
+        profilePresenter.getUser();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -153,5 +158,25 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 3000);
+    }
+
+    @Override
+    public void DisplayUserSuccess(User user) {
+        txtNameUser.setText(user.getName());
+        txtEmail.setText(user.getEmail());
+    }
+
+    @Override
+    public void DisplayError(String error) {
+        AlertDialog.Builder dialogNetWork = new AlertDialog.Builder(getActivity());
+        dialogNetWork.setTitle("Thông báo");
+        dialogNetWork.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                getActivity().finish();
+            }
+        });
+        dialogNetWork.setMessage(error);
+        dialogNetWork.create().show();
     }
 }

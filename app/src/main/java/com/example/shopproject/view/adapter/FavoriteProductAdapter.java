@@ -54,29 +54,13 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
 
         Glide.with(mContext)
                 .load(product.getImage())
-                .placeholder(R.mipmap.aohoodie1)
+                .placeholder(R.mipmap.imgloadwait)
                 .into(holder.imgProductFavorite);
         holder.txtNameProductFavorite.setText(product.getName());
         holder.txtPriceProductFavorite.setText(Publics.formatGia(product.getPrice()));
-        holder.btnMenu.setOnClickListener(view -> {
-            PopupMenu popupMenu = new PopupMenu(mContext, holder.btnMenu);
-            popupMenu.getMenuInflater().inflate(R.menu.menu_yeuthich_fragment, popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(menuItem -> {
-                switch (menuItem.getItemId()){
-                    case R.id.action_MuaNgay:
-                        listener.onClickBuyNow(product);
-                        break;
 
-                    case R.id.action_Xoa:
-                        listener.onClickDelete(product);
-                        break;
-                }
-                return true;
-            });
-            popupMenu.show();
-        });
-        holder.btnAddCart.setOnClickListener(view -> {
-            listener.onClickAddCart(product);
+        holder.btnDelete.setOnClickListener(view -> {
+            listener.onClickDelete(product);
         });
 
         holder.layoutContain.setOnClickListener(view -> {
@@ -98,8 +82,7 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         private ImageView imgProductFavorite;
         private TextView txtNameProductFavorite;
         private TextView txtPriceProductFavorite;
-        private ImageButton btnMenu;
-        private AppCompatButton btnAddCart;
+        private AppCompatButton btnDelete;
 
         public FavoriteProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,8 +90,7 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
             imgProductFavorite = itemView.findViewById(R.id.imgSP_YeuThich);
             txtNameProductFavorite = itemView.findViewById(R.id.txtNameSP_YeuThich);
             txtPriceProductFavorite = itemView.findViewById(R.id.txtGiaSP_YeuThich);
-            btnMenu = itemView.findViewById(R.id.btnMoMenu);
-            btnAddCart = itemView.findViewById(R.id.btnThemGioHang);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }

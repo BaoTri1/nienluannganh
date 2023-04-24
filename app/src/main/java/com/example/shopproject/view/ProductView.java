@@ -8,5 +8,6 @@ public interface ProductView {
     void DisplayListProduct(List<Product> listProduct);
     void DisplayNumProducts(String message);
     void DisplayNoNetWork(String message);
+    void DisplayBadge(int number);
     void DisplayError(String message);
 }

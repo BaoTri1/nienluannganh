@@ -10,5 +10,6 @@
         android:id="@+id/action_giohang_detail"
         android:icon="@drawable/ic_baseline_shopping_cart_black_24"
         android:title="@string/action_cartshopping"
+        app:actionLayout="@layout/custom_action_item_layout"
         app:showAsAction="always"/>
 </menu>

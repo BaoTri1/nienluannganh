@@ -7,17 +7,17 @@ public class ShippingAddress implements Serializable {
     private String fullName;
     private String address;
     private String city;
-    private String postalCode;
-    private String country;
-    private String SDT;
+    private String district;
+    private String ward;
+    private String phone;
 
-    public ShippingAddress(String fullName, String address, String city, String postalCode, String country, String SDT) {
+    public ShippingAddress(String fullName, String address, String city, String district, String ward, String phone) {
         this.fullName = fullName;
         this.address = address;
         this.city = city;
-        this.postalCode = postalCode;
-        this.country = country;
-        this.SDT = SDT;
+        this.district = district;
+        this.ward = ward;
+        this.phone = phone;
     }
 
     public String getFullName() {
@@ -44,27 +44,27 @@ public class ShippingAddress implements Serializable {
         this.city = city;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
-    public String getCountry() {
-        return country;
+    public String getWard() {
+        return ward;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setWard(String ward) {
+        this.ward = ward;
     }
 
-    public String getSDT() {
-        return SDT;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setSDT(String SDT) {
-        this.SDT = SDT;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

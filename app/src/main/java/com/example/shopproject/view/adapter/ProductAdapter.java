@@ -55,7 +55,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
          Glide.with(mContext)
                  .load(product.getImage())
-                 .placeholder(R.mipmap.adirunner2)
+                 .placeholder(R.mipmap.imgloadwait)
                  .into(holder.imgProduct);
 
          holder.txtNameProduct.setText(product.getName());

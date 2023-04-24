@@ -117,7 +117,6 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
             btnAction.setText(typeButton);
             btnAction.setOnClickListener(view -> {
                 int quatity = Integer.parseInt(editDisplay.getText().toString().trim());
-                bottomSheetPresenter.addCart(quatity, colorName, sizeName, indexColor, indexSize);
                 bottomSheetPresenter.saveItemCart(quatity, colorName, sizeName, indexColor, indexSize);
                 DisplayMessage();
                 bottomSheetDialog.dismiss();
@@ -198,11 +197,18 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
         }, 1700);
     }
 
+    private void setImgByColor(String pathImg){
+        Glide.with(getContext())
+                .load(pathImg)
+                .placeholder(R.mipmap.imgloadwait)
+                .into(imgProduct);
+    }
+
     @Override
     public void DisplayProduct(Product product) {
         Glide.with(getContext())
                 .load(product.getImage())
-                .placeholder(R.mipmap.aohoodie1)
+                .placeholder(R.mipmap.imgloadwait)
                 .into(imgProduct);
 
         txtNameProduct.setText(product.getName());
@@ -224,11 +230,12 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
                 indexColor = index;
                 colorName= color.getName();
                 txtColor.setText("Màu sắc: " + color.getName());
-                if(color.getSize() == null || color.getSize().isEmpty()){
+                setImgByColor(color.getImage().get(0));
+                if(color.getSizes() == null || color.getSizes().isEmpty()){
                     layoutSize.setVisibility(View.GONE);
                     return;
                 }
-                adapterSize = new SizeAdapter(getActivity(), color.getSize(), new clickListener() {
+                adapterSize = new SizeAdapter(getActivity(), color.getSizes(), new clickListener() {
                     @Override
                     public void itemSizeClick(int index, Size size) {
                         indexSize = index;
@@ -281,15 +288,15 @@ public class BottomSheetProductFragment extends BottomSheetDialogFragment implem
             public void loadImage(ImageView imageView, String image) {
                 Glide.with(getActivity())
                         .load(image)
-                        .placeholder(R.mipmap.anh2)
+                        .placeholder(R.mipmap.imgloadwait)
                         .into(imageView);
             }
         }).show();
     }
 
     @Override
-    public void PassItemCart(Items items) {
-        callbackFragment.AddCartSuccess(items);
+    public void updateBadge(int number) {
+        callbackFragment.UpdateBadge(number);
     }
 
     @Override

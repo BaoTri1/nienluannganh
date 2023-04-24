@@ -119,6 +119,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:layout_below="@+id/btnSort"
+                    android:layout_marginTop="40dp"
                     android:text="Không tìm thấy sản phẩm phù hợp."
                     android:textColor="@color/black"
                     android:textSize="20sp"

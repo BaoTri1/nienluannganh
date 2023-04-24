@@ -1,6 +1,7 @@
 package com.example.shopproject.repository;
 
 import com.example.shopproject.mode.Items;
+import com.example.shopproject.mode.Orders;
 import com.example.shopproject.mode.ShippingAddress;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ProductRepository {
     void getListProductFilter(String category, String query, String price, String rating, String order);
     void getListCart();
     void PostOrders(List<Items> items, ShippingAddress shippingAddress, String paymentMethod, int toltalPriceProcuct, int shippingPrice, int taxPrice, int toltalPayment);
+    void PostReview(String comment, int rating, String name, String id);
+    void getListOrdersHistory();
 }

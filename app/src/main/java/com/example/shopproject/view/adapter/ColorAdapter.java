@@ -48,28 +48,8 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHol
         if(color == null)
             return;
 
+        holder.txtColor.setBackgroundColor(android.graphics.Color.parseColor(color.getName()));
 
-        switch (color.getName()){
-            case "Do":
-                holder.txtColor.setBackgroundResource(R.color.Do);
-                break;
-
-            case "Vang":
-                holder.txtColor.setBackgroundResource(R.color.Vang);
-                break;
-
-            case "XanhDuong":
-                holder.txtColor.setBackgroundResource(R.color.XanhDuong);
-                break;
-
-            case "Trang":
-                holder.txtColor.setBackgroundResource(R.color.Trang);
-                break;
-
-            case "Den":
-                holder.txtColor.setBackgroundResource(R.color.Den);
-                break;
-        }
 
         if(positionSelected == position) {
             holder.layoutColor.setBackgroundResource(R.drawable.bg_selected);

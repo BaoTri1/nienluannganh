@@ -9,10 +9,14 @@ import com.example.shopproject.R;
 import com.example.shopproject.callbackAPI.APIService;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.OrderRequest;
+import com.example.shopproject.mode.Orders;
+import com.example.shopproject.mode.Photo;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.SearchResponse;
 import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.mode.orderResponse;
+import com.example.shopproject.mode.reviewRequest;
+import com.example.shopproject.mode.reviewResponse;
 import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.callbackMode.CallbackProductMode;
 import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
@@ -96,6 +100,15 @@ public class ProductInterator implements ProductRepository{
                 if(response.isSuccessful()){
                     Product productResult = response.body();
                     callbackProductMode.getProductSuccess(productResult);
+
+                    List<Photo> list = new ArrayList<>();
+                    list.add(new Photo(productResult.getImage()));
+                    for(int i = 0; i < productResult.getColor().size(); i++){
+                        for(int j = 0; j < productResult.getColor().get(i).getImage().size(); j++){
+                            list.add(new Photo(productResult.getColor().get(i).getImage().get(j)));
+                        }
+                    }
+                    callbackProductMode.getImageProductSuccess(list);
                 }
                 else {
                     callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
@@ -142,7 +155,7 @@ public class ProductInterator implements ProductRepository{
             public void onResponse(Call<Product> call, Response<Product> response) {
                 if(response.isSuccessful()){
                     Product product = response.body();
-                    callbackProductMode.getNumProductAvailable(product.getColor().get(indexColor).getSize().get(indexSize).getCountSize());
+                    callbackProductMode.getNumProductAvailable(product.getColor().get(indexColor).getSizes().get(indexSize).getCountSize());
                 }else {
                     callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
                 }
@@ -301,6 +314,48 @@ public class ProductInterator implements ProductRepository{
             @Override
             public void onFailure(Call<orderResponse> call, Throwable t) {
                 callbackProductMode.getDataFailure("Đã xảy ra lỗi. Call API thất bại!" + call.toString());
+            }
+        });
+    }
+
+    @Override
+    public void PostReview(String comment, int rating, String name, String id) {
+        String tokenAdmin = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2Y1ZmI2YmFiNGNjMjc2MGUwNmFhOTAiLCJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjgwNTMyMzQ0LCJleHAiOjE2ODMxMjQzNDR9.p6rGg2MgaBvdROGLKT9xFnGip-RQdGeW6_jGtkj2Wpc";
+        reviewRequest request = new reviewRequest(rating, comment, name);
+        APIService.apiService.postReview(Publics.GetToken(mContext), id, request).enqueue(new Callback<reviewResponse>() {
+            @Override
+            public void onResponse(Call<reviewResponse> call, Response<reviewResponse> response) {
+                if(response.isSuccessful()){
+                    reviewResponse result = response.body();
+                    callbackProductMode.reviewSuccess(result);
+                }else {
+                    callbackProductMode.getDataFailure("Bạn đã bình luận về sản phẩm này rồi.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<reviewResponse> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi. Call API thất bại!" + call.toString());
+            }
+        });
+    }
+
+    @Override
+    public void getListOrdersHistory() {
+        APIService.apiService.getListOrderHistory(Publics.GetToken(mContext)).enqueue(new Callback<List<Orders>>() {
+            @Override
+            public void onResponse(Call<List<Orders>> call, Response<List<Orders>> response) {
+                if(response.isSuccessful()){
+                    List<Orders> result = response.body();
+                    callbackProductMode.getListOrdersHistorySuccess(result);
+                }else {
+                    callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Orders>> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi. Lấy dữ liệu thất bại");
             }
         });
     }

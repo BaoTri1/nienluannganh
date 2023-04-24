@@ -6,16 +6,49 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".orther_handle.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_app"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_app_round"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShopProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.UI.IntroActivity"
+            android:exported="true"
+            android:parentActivityName=".view.UI.MainActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.UI.ListOrdersHistory"
+            android:exported="true"
+            android:parentActivityName=".view.UI.MainActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.UI.ListAddressActicity"
+            android:exported="true"
+            android:parentActivityName=".view.UI.MainActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.UI.ReviewActivity"
+            android:exported="false"
+            android:parentActivityName=".view.UI.DetailOrderActicity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".view.UI.DetailOrderActicity"
             android:exported="false"
@@ -79,7 +112,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.UI.ChiTIetHoSo_Activity"
+            android:name=".view.UI.DetailProfile_Activity"
             android:exported="false"
             android:parentActivityName=".view.UI.MainActivity">
             <meta-data

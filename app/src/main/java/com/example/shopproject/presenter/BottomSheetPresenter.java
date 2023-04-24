@@ -116,21 +116,10 @@ public class BottomSheetPresenter implements CallbackProductMode {
 
     }
 
-    public void addCart(int quantity, String color, String size, int indexColor, int indexSize){
-        String slug = this.product.getSlug();
-        String name = this.product.getName();
-        String image = this.product.getImage();
-        int price = this.product.getPrice();
-        String _id = this.product.get_id();
-
-        Items items = new Items(slug, name, quantity, image, price, _id, indexColor, indexSize, color, size);
-        bottomSheetView.PassItemCart(items);
-    }
-
     public void createItemOrder(int quantity, String color, String size, int indexColor, int indexSize){
         String slug = this.product.getSlug();
         String name = this.product.getName();
-        String image = this.product.getImage();
+        String image = this.product.getColor().get(indexColor).getImage().get(0);
         int price = this.product.getPrice();
         String _id = this.product.get_id();
 
@@ -163,6 +152,7 @@ public class BottomSheetPresenter implements CallbackProductMode {
             }else {
                 ShopProjectDatabase.getInstance(mContext).itemCartDAO().updateQuantityItemCart(email, this.product.getSlug(), this.size, numberUpdate);
             }
+            bottomSheetView.updateBadge(ShopProjectDatabase.getInstance(mContext).itemCartDAO().getNumItemCart(email));
             check = 0;
         }
     }

@@ -87,12 +87,14 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         AccountManagement.deleteAccount(this);
         String email = editEmail.getText().toString().trim();
         String passwd = editPasswd.getText().toString().trim();
-        AccountManagement.saveAccount(this, email, passwd, true);
+        AccountManagement.saveAccount(this, user.get_id(), email, passwd, true);
         txtMessage.setVisibility(View.GONE);
         Toast.makeText(LoginActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
         Intent intentMainActivity = new Intent(LoginActivity.this, MainActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("User", user);
+        bundle.putString("ACTION_KEY", "LOGIN");
+        bundle.putString("MESSAGE_KEY", "");
+        bundle.putSerializable("USER_KEY", user);
         intentMainActivity.putExtras(bundle);
         startActivity(intentMainActivity);
     }

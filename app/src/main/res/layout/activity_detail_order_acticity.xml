@@ -71,183 +71,192 @@
             android:layout_below="@+id/layoutAddress"
             android:layout_marginTop="10dp" />
 
-        <TextView
-            android:id="@+id/lblId"
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:id="@+id/layoutInfor"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rcv_item"
             android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Mã hóa đơn"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:stretchColumns="1">
 
-        <TextView
-            android:id="@+id/txtId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblId"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            <TableRow>
 
-        <TextView
-            android:id="@+id/lbltoltalItems"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtId"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Tổng tiền sản phẩm"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/lblId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="Mã hóa đơn"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txttoltalItems"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtId"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/txtId"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </TableRow>
 
-        <TextView
-            android:id="@+id/lblPriceShipping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lbltoltalItems"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Tổng tiền vận chuyển"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            <TableRow>
 
-        <TextView
-            android:id="@+id/txtPriceShipping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txttoltalItems"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/lbltoltalItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="Tổng tiền sản phẩm"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/lblToltalBill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblPriceShipping"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Tổng tiền hóa đơn"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txttoltalItems"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </TableRow>
 
+            <TableRow>
 
-        <TextView
-            android:id="@+id/txtToltalBill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtPriceShipping"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/color_gia"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/lblPriceShipping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="Tổng tiền vận chuyển"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/lblDateCreate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblToltalBill"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Thởi gian đặt hàng"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/txtPriceShipping"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </TableRow>
 
-        <TextView
-            android:id="@+id/txtDateCreate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtToltalBill"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            <TableRow>
 
-        <TextView
-            android:id="@+id/lblDelivered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDateCreate"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Tình trạng"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/lblToltalBill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="Tổng tiền hóa đơn"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtDelivered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtDateCreate"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/txtToltalBill"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/color_gia"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </TableRow>
 
-        <TextView
-            android:id="@+id/lblPayment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDelivered"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Phương thức thanh toán"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            <TableRow>
 
-        <TextView
-            android:id="@+id/txtPayment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblPayment"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/lblDateCreate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="Thởi gian đặt hàng"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtDateCreate"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/lblDelivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="Tình trạng"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtDelivered"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/lblPayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="Phương thức thanh toán"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtPayment"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </TableRow>
+
+        </TableLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnClose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtPayment"
+            android:layout_below="@id/layoutInfor"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"

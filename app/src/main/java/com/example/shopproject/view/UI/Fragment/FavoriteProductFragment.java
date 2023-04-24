@@ -3,6 +3,7 @@ package com.example.shopproject.view.UI.Fragment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,9 +29,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.shopproject.R;
 import com.example.shopproject.mode.Product;
+import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.presenter.FavoriteProductPresenter;
 import com.example.shopproject.view.FavoriteProductView;
 import com.example.shopproject.view.UI.DetailProductActivity;
+import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
+import com.example.shopproject.view.UI.LoginActivity;
 import com.example.shopproject.view.adapter.FavoriteProductAdapter;
 import com.example.shopproject.view.adapter.ProductAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
@@ -123,7 +127,6 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        Toast.makeText(getActivity(), "Refresh data", Toast.LENGTH_SHORT).show();
         favoriteProductPresenter.getListFavoriteProduct();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -131,7 +134,7 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override
@@ -140,16 +143,6 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
             txtNum.setText(mList.size() + " sản phẩm");
 
         adapter = new FavoriteProductAdapter(mList, getActivity(), new clickListener(){
-            @Override
-            public void onClickAddCart(Product product) {
-                Toast.makeText(getActivity(), "Thêm " + product.getName() + " vào giỏ hàng", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onClickBuyNow(Product product) {
-                Toast.makeText(getActivity(), "Mua " + product.getName(), Toast.LENGTH_SHORT).show();
-            }
-
             @Override
             public void onClickDelete(Product product) {
                 favoriteProductPresenter.deleteProdut(product);

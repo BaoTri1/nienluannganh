@@ -6,14 +6,16 @@ import java.util.List;
 public class Color implements Serializable {
     private String name;
     private int countColor;
-    private List<Size> size;
-    private List<String> image;
+    private List<Size> sizes;
+    private List<String> images;
+    private String _id;
 
-    public Color(String name, int countColor, List<Size> size, List<String> image) {
+    public Color(String name, int countColor, List<Size> size, List<String> image, String _id) {
         this.name = name;
         this.countColor = countColor;
-        this.size = size;
-        this.image = image;
+        this.sizes = size;
+        this.images = image;
+        this._id = _id;
     }
 
     public String getName() {
@@ -32,19 +34,27 @@ public class Color implements Serializable {
         this.countColor = countColor;
     }
 
-    public List<Size> getSize() {
-        return size;
-    }
-
-    public void setSize(List<Size> size) {
-        this.size = size;
-    }
-
     public List<String> getImage() {
-        return image;
+        return images;
     }
 
     public void setImage(List<String> image) {
-        this.image = image;
+        this.images = image;
+    }
+
+    public List<Size> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<Size> sizes) {
+        this.sizes = sizes;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 }

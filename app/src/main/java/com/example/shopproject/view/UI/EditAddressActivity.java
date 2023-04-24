@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ import com.example.shopproject.R;
 import com.example.shopproject.mode.Province;
 import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.presenter.editAddressPresenter;
+import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
+import com.example.shopproject.sqlite.Entity.Address;
 import com.example.shopproject.view.EditAddressView;
 import com.example.shopproject.view.adapter.DistrictSpinnerAdapter;
 import com.example.shopproject.view.adapter.ProvinceSpinnerAdapter;
@@ -42,6 +45,7 @@ public class EditAddressActivity extends AppCompatActivity implements EditAddres
     private Spinner spinnerDistrict;
     private Spinner spinnerWards;
     private AppCompatButton btnConfrim;
+    private CheckBox cboxSaveAddress;
     private ProvinceSpinnerAdapter provinceSpinnerAdapter;
     private DistrictSpinnerAdapter districtSpinnerAdapter;
     private WardSpinnerAdapter wardSpinnerAdapter;
@@ -75,6 +79,23 @@ public class EditAddressActivity extends AppCompatActivity implements EditAddres
             addressPresenter.createShippingAddress(name, numApartment_streetName, province, district, ward, sdt, strArea);
         });
 
+        cboxSaveAddress.setOnClickListener(v -> {
+            if(cboxSaveAddress.isChecked()){
+                String name = editName.getText().toString().trim();
+                String sdt = editSDT.getText().toString().trim();
+                String numApartment_streetName = editAddress.getText().toString().trim();
+                String strArea = ", " + ward + ", " + district + ", " + province;
+                Address address = ShopProjectDatabase.getInstance(this).addressDAO().getAddress(numApartment_streetName + strArea);
+                if(address == null){
+                    String email = ShopProjectDatabase.getInstance(this).accountDAO().getEmail();
+                    ShopProjectDatabase.getInstance(this).addressDAO().insertAddress(new Address(name, sdt, numApartment_streetName + strArea, ward, district, province, email));
+                    Toast.makeText(this, "Đã lưu địa chỉ", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(this, "Địa chỉ đã tồn tại", Toast.LENGTH_SHORT).show();
+                    cboxSaveAddress.setChecked(false);
+                }
+            }
+        });
     }
 
     private void initView(){
@@ -89,7 +110,7 @@ public class EditAddressActivity extends AppCompatActivity implements EditAddres
         spinnerDistrict = findViewById(R.id.spinnerDistrict);
         spinnerWards = findViewById(R.id.spinnerWards);
         btnConfrim = findViewById(R.id.btnConfrim);
-
+        cboxSaveAddress = findViewById(R.id.cboxSaveAddress);
     }
 
     @Override
@@ -173,7 +194,7 @@ public class EditAddressActivity extends AppCompatActivity implements EditAddres
                 dialog.dismiss();
             }
         });
-        builder.setMessage(shippingAddress.getFullName() + " | " + shippingAddress.getSDT() + "\n" + shippingAddress.getAddress());
+        builder.setMessage(shippingAddress.getFullName() + " | " + shippingAddress.getPhone() + "\n" + shippingAddress.getAddress());
         builder.create().show();
     }
 

@@ -7,6 +7,7 @@ import com.example.shopproject.callbackAPI.APIService;
 import com.example.shopproject.mode.LoginRequest;
 import com.example.shopproject.mode.RegisterRequest;
 import com.example.shopproject.mode.User;
+import com.example.shopproject.orther_handle.Publics;
 import com.example.shopproject.presenter.callbackMode.CallbackUserMode;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class UserInterator implements UserRepository {
 
     private CallbackUserMode callbackUserMode;
     private Context mContext;
+    public final static String tokenAdmin = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2Y1ZmI2YmFiNGNjMjc2MGUwNmFhOTAiLCJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjgwNTMyMzQ0LCJleHAiOjE2ODMxMjQzNDR9.p6rGg2MgaBvdROGLKT9xFnGip-RQdGeW6_jGtkj2Wpc";
 
     public UserInterator(Context mContext, CallbackUserMode callbackUserMode) {
         this.mContext = mContext;
@@ -70,8 +72,23 @@ public class UserInterator implements UserRepository {
     }
 
     @Override
-    public List<User> getListUser() {
-        return null;
+    public void getUserById(String id) {
+        APIService.apiService.getUserById(tokenAdmin, id).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    User userResult = response.body();
+                    callbackUserMode.GetUserSuccess(userResult);
+                }else {
+                    callbackUserMode.GetUserFailure("Lấy thông tin thất bại!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                callbackUserMode.GetUserFailure("Lấy thông tin thất bại do call api thất bại!");
+            }
+        });
     }
 
 }

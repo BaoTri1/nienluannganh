@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.shopproject.R;
 import com.example.shopproject.mode.Items;
+import com.example.shopproject.mode.User;
 import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.sqlite.Database.ShopProjectDatabase;
 import com.example.shopproject.sqlite.Entity.Account;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity{
     private ViewPagerAdapter viewPagerAdapter;
     private Toast toast;
     private long backPressedtime;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,31 +61,30 @@ public class MainActivity extends AppCompatActivity{
         //set sự kiện click cho BottomNavigation
         BottomNavigationClick();
 
-//        String email = ShopProjectDatabase.getInstance(this).accountDAO().getEmail();
-//        int num = ShopProjectDatabase.getInstance(this).itemCartDAO().getNumItemCart(email);
-//        Log.e("Tri", String.valueOf(num));
-//        if(num != 0){
-//            setIconforItemBottomNavigation(R.id.action_cart, 2);
-//        }
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            String message = bundle.getString("MESSAGE_KEY");
-            if(!message.equals("")){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Thông báo");
-                builder.setNegativeButton("Thử lại", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                builder.setMessage(message);
-                builder.create().show();
-            }else{
-
+            String action = bundle.getString("ACTION_KEY");
+            if(action.equals("LOGIN")){
+                String message = bundle.getString("MESSAGE_KEY");
+                if(!message.equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Thông báo");
+                    builder.setNegativeButton("Thử lại", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    builder.setMessage(message);
+                    builder.create().show();
+                }else{
+                    this.user = (User) bundle.getSerializable("USER_KEY");
+                }
+            }else if(action.equals("OPENCART")){
+                GoCartFragment();
             }
         }
     }
@@ -176,6 +177,10 @@ public class MainActivity extends AppCompatActivity{
             Log.e("Tri", "null");
         }
 
+    }
+
+    public User getUser(){
+        return this.user;
     }
 
     @Override

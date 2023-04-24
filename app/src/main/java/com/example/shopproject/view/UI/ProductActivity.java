@@ -49,6 +49,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
     private Button btnSearch;
     private NestedScrollView nestedScrollView;
     private TextView txtNumProduct;
+    private TextView textCartItemCount;
     private AppCompatButton btnFilter;
     private AppCompatButton btnSort;
     private ProductAdapter adapterProduct;
@@ -176,8 +177,24 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.contextmenu_detail_product, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.contextmenu_detail_product, menu);
+//        return true;
+        getMenuInflater().inflate(R.menu.contextmenu_detail_product, menu);
+        final MenuItem menuItem = menu.findItem(R.id.action_giohang_detail);
+
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        productSearchPresenter.setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
         return true;
     }
 
@@ -189,17 +206,24 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                 break;
 
             case R.id.action_giohang_detail:
-                Intent intent = new Intent(ProductActivity.this, MainActivity.class);
-                setResult(RESULT_OK, intent);
-                ProductActivity.this.finish();
+                backAction("OPENCART");
                 Toast.makeText(ProductActivity.this, "Gio hang", Toast.LENGTH_SHORT).show();
                 break;
 
             case android.R.id.home:
-                this.finish();
+                backAction("");
                 break;
         }
         return true;
+    }
+
+    public void backAction(String action){
+        Intent intent = new Intent(ProductActivity.this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("ACTION_KEY", action);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -230,6 +254,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                     bundle.putString("slug", product.getSlug());
                     intentDetailProduct.putExtras(bundle);
                     startActivity(intentDetailProduct);
+                    ProductActivity.this.finish();
                 }
             });
             GridLayoutManager manager = new GridLayoutManager(this, 2);
@@ -272,6 +297,23 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         });
         dialogNetWork.setMessage(message);
         dialogNetWork.create().show();
+    }
+
+    @Override
+    public void DisplayBadge(int number) {
+        if (textCartItemCount != null) {
+            if (number == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            }
+            else {
+                textCartItemCount.setText(String.valueOf(Math.min(number, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     @Override

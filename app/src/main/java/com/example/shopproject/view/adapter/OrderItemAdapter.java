@@ -49,7 +49,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
 
         Glide.with(context)
                 .load(items.getImage())
-                .placeholder(R.mipmap.anh2)
+                .placeholder(R.mipmap.imgloadwait)
                 .into(holder.imgProduct);
 
         holder.txtNameProduct.setText(items.getName());

@@ -19,7 +19,7 @@ import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ChiTIetHoSo_Activity extends AppCompatActivity {
+public class DetailProfile_Activity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private AppCompatButton btnChinhSua;
@@ -36,7 +36,7 @@ public class ChiTIetHoSo_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chi_tiet_ho_so);
+        setContentView(R.layout.activity_detail_profile);
 
         initView();
 
@@ -55,7 +55,7 @@ public class ChiTIetHoSo_Activity extends AppCompatActivity {
                 Edit(false);
                 btnChinhSua.setText(getResources().getString(R.string.btnSua));
                 //Luu lại thong tin lên server
-                Toast.makeText(ChiTIetHoSo_Activity.this, "Đã lưu thông tin thành công.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailProfile_Activity.this, "Đã lưu thông tin thành công.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -71,7 +71,7 @@ public class ChiTIetHoSo_Activity extends AppCompatActivity {
 
         //Sự kiện Thay đổi mật khẩu
         btnThayDoiMatKhau.setOnClickListener(view -> {
-            Toast.makeText(ChiTIetHoSo_Activity.this, "Mở Thay đổi mật khẩu", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailProfile_Activity.this, "Mở Thay đổi mật khẩu", Toast.LENGTH_SHORT).show();
         });
 
     }
@@ -102,7 +102,7 @@ public class ChiTIetHoSo_Activity extends AppCompatActivity {
 
     private void createSelectOptionDialog(){
         String[] arrayOption = getResources().getStringArray(R.array.optionGioiTinh);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(ChiTIetHoSo_Activity.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(DetailProfile_Activity.this);
         dialog.setTitle("Giới tính");
         dialog.setItems(arrayOption, new DialogInterface.OnClickListener() {
             @Override
@@ -128,7 +128,7 @@ public class ChiTIetHoSo_Activity extends AppCompatActivity {
             }
         };
 
-        DatePickerDialog dialog = new DatePickerDialog(ChiTIetHoSo_Activity.this,
+        DatePickerDialog dialog = new DatePickerDialog(DetailProfile_Activity.this,
                                     android.R.style.Theme_Holo_Light_Dialog_NoActionBar, listener, year, month, day);
         dialog.setTitle("Chọn ngày sinh");
         dialog.show();

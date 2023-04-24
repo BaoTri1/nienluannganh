@@ -64,6 +64,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("ACTION_KEY", "LOGIN");
                 bundle.putString("MESSAGE_KEY", message);
                 bundle.putSerializable("USER_KEY", user);
                 intent.putExtras(bundle);

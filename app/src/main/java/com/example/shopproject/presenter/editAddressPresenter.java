@@ -56,7 +56,7 @@ public class editAddressPresenter implements CallbackAddress {
         String address = numApartment_streetName + strArea;
 
         shippingAddress = new ShippingAddress(name, address, city, postalCode, country, sdt);
-        Log.e("Tri", "fullName: " + shippingAddress.getFullName() + ", address: " + shippingAddress.getAddress() + ", sdt: " + shippingAddress.getSDT());
+        Log.e("Tri", "fullName: " + shippingAddress.getFullName() + ", address: " + shippingAddress.getAddress() + ", sdt: " + shippingAddress.getPhone());
         editAddressView.PassshippingAddress(shippingAddress);
     }
 

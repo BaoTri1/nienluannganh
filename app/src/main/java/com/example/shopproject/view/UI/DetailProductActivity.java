@@ -1,6 +1,7 @@
 package com.example.shopproject.view.UI;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -15,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -43,6 +45,7 @@ import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.Photo;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.Review;
+import com.example.shopproject.mode.User;
 import com.example.shopproject.orther_handle.AccountManagement;
 import com.example.shopproject.orther_handle.CharacterItemDecoration;
 import com.example.shopproject.orther_handle.Publics;
@@ -90,9 +93,12 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
     private RecyclerView rcv_Review;
     private RecyclerView rcv_listProduct;
     private DetailProductPresenter detailProductPresenter;
-    private Bundle bundleItems;
     private boolean isExpanded = false;
     private String slug;
+    private Product product;
+    private User user;
+    private AppCompatButton btnReview;
+    private TextView textCartItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,10 +114,10 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         setOnRefreshData();
 
         detailProductPresenter = new DetailProductPresenter(this, this);
-        bundleItems = new Bundle();
 
         //Receive Data from HomeFragment
         slug = getIntent().getExtras().getString("slug", "");
+        user = (User) getIntent().getExtras().getSerializable("USER_KEY");
         getInforProduct(slug);
 
         //Create ListProduct
@@ -184,6 +190,14 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
                 btnExpand_collaps.setText("Xem thêm");
             }
         });
+
+        btnReview.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ReviewActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("ID_KEY", this.product.get_id());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
     }
 
     private void initView(){
@@ -210,11 +224,11 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         txtNumReview = findViewById(R.id.txtSoRate);
         rcv_Review = findViewById(R.id.rcv_Review);
         rcv_listProduct = findViewById(R.id.rcv_listProduct_detail);
+        btnReview = findViewById(R.id.btnReview);
     }
 
     public void getInforProduct(String slug){
         detailProductPresenter.getProduct(slug);
-        detailProductPresenter.setImagesProduct();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -246,8 +260,21 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.contextmenu_detail_product, menu);
+        getMenuInflater().inflate(R.menu.contextmenu_detail_product, menu);
+        final MenuItem menuItem = menu.findItem(R.id.action_giohang_detail);
+
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        detailProductPresenter.setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
         return true;
     }
 
@@ -259,23 +286,24 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
                 break;
 
             case R.id.action_giohang_detail:
-                putDataforCart("AddItemAndOpenCart");
+                backAction("OPENCART");
                 Toast.makeText(DetailProductActivity.this, "Gio hang", Toast.LENGTH_SHORT).show();
                 break;
 
             case android.R.id.home:
-                putDataforCart("AddItemCart");
+                backAction("");
                 Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
     }
 
-    public void putDataforCart(String action){
+    public void backAction(String action){
         Intent intent = new Intent(DetailProductActivity.this, MainActivity.class);
-        bundleItems.putString("Action", action);
-        intent.putExtras(bundleItems);
-        setResult(RESULT_OK, intent);
+        Bundle bundle = new Bundle();
+        bundle.putString("ACTION_KEY", action);
+        intent.putExtras(bundle);
+        startActivity(intent);
         finish();
     }
 
@@ -311,6 +339,7 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
 
     @Override
     public void DisplayInforProduct(Product product) {
+        this.product = product;
         txtNameProduct.setText(product.getName());
         txtPriceProduct.setText(Publics.formatGia(product.getPrice()));
         txtDescribe.setText(product.getDescription());
@@ -332,6 +361,8 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
             layout_review.setVisibility(View.GONE);
             return;
         }
+        lblNotReview.setVisibility(View.GONE);
+        layout_review.setVisibility(View.VISIBLE);
         imgRate.setImageResource(Publics.getImgRateforId(rate));
         txtRate.setText("(" + rate + "/5)");
         txtNumReview.setText(String.valueOf(numRviews));
@@ -365,6 +396,23 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
     }
 
     @Override
+    public void DisplayBadge(int number) {
+        if (textCartItemCount != null) {
+            if (number == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            }
+            else {
+                textCartItemCount.setText(String.valueOf(Math.min(number, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    @Override
     public void DisplayNoNetWork(String message) {
         AlertDialog.Builder dialogNetWork = new AlertDialog.Builder(this);
         dialogNetWork.setTitle("Thông báo");
@@ -393,8 +441,20 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
     }
 
     @Override
-    public void AddCartSuccess(Items items) {
-        bundleItems.putSerializable("ITEMS_KEY", items);
+    public void UpdateBadge(int number) {
+        if (textCartItemCount != null) {
+            if (number == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            }
+            else {
+                textCartItemCount.setText(String.valueOf(Math.min(number, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     @Override

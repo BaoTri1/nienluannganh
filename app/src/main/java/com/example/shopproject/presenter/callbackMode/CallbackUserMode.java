@@ -10,4 +10,7 @@ public interface CallbackUserMode {
     default void RegisterSuccess(User user) {}
     default void RegisterFailure(String message) {}
 
+    default void GetUserSuccess(User user) {}
+    default void GetUserFailure(String message) {}
+
 }

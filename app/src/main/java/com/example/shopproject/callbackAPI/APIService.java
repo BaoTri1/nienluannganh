@@ -6,12 +6,15 @@ import android.content.SharedPreferences;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.LoginRequest;
 import com.example.shopproject.mode.OrderRequest;
+import com.example.shopproject.mode.Orders;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.mode.RegisterRequest;
 import com.example.shopproject.mode.SearchResponse;
 import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.mode.User;
 import com.example.shopproject.mode.orderResponse;
+import com.example.shopproject.mode.reviewRequest;
+import com.example.shopproject.mode.reviewResponse;
 import com.example.shopproject.orther_handle.Publics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -74,8 +77,8 @@ public interface APIService {
     @POST("api/users/signup/")
     Call<User> Register(@Body RegisterRequest registerRequest);
 
-    @GET("api/users/")
-    Call<List<User>> getListUser();
+    @GET("api/users/{id}")
+    Call<User> getUserById(@Header("authorization") String header, @Path("id") String id);
 
     @GET("/api/products/categories")
     Call<List<String>> getListCatalogs();
@@ -104,6 +107,12 @@ public interface APIService {
 
     @POST("/api/orders")
     Call<orderResponse> postOrder(@Header("authorization") String header, @Body OrderRequest orderRequest);
+
+    @POST("/api/products/{id}/reviews")
+    Call<reviewResponse> postReview(@Header("authorization") String header, @Path("id") String id, @Body reviewRequest reviewRequest);
+
+    @GET("/api/orders/mine")
+    Call<List<Orders>> getListOrderHistory(@Header("authorization") String header);
 
 }
 

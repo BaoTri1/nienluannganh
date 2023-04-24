@@ -61,8 +61,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         btnFacebook.setOnClickListener(view -> {
 
         });
-
-
     }
 
     private void initView(){
@@ -94,11 +92,13 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         AccountManagement.deleteAccount(this);
         String email = editEmail.getText().toString().trim();
         String passwd = editPasswd.getText().toString().trim();
-        AccountManagement.saveAccount(this, email, passwd, true);
+        AccountManagement.saveAccount(this, user.get_id(), email, passwd, true);
         txtMessage.setVisibility(View.GONE);
         Intent intentMainActivity = new Intent(RegisterActivity.this, MainActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("User", user);
+        bundle.putString("ACTION_KEY", "LOGIN");
+        bundle.putString("MESSAGE_KEY", "");
+        bundle.putSerializable("USER_KEY", user);
         intentMainActivity.putExtras(bundle);
         startActivity(intentMainActivity);
         finish();

@@ -28,10 +28,10 @@ public class HomePresenter implements CallbackProductMode {
 
     public void createBanner(){
         List<Photo> list = new ArrayList<>();
-        list.add(new Photo(R.mipmap.img1));
-        list.add(new Photo(R.mipmap.img2));
-        list.add(new Photo(R.mipmap.img3));
-        list.add(new Photo(R.mipmap.img4));
+        list.add(new Photo("https://intphcm.com/data/upload/banner-thoi-trang4.jpg"));
+        list.add(new Photo("https://intphcm.com/data/upload/1608888571-banner-thoi-trang-1.jpg"));
+        list.add(new Photo("https://intphcm.com/data/upload/1608888571-banner-thoi-trang-2.jpg"));
+        list.add(new Photo("https://intphcm.com/data/upload/1608888571-banner-thoi-trang-3.jpg"));
         mHomeView.DisplayBanner(list);
     }
 

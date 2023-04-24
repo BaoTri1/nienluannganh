@@ -182,6 +182,7 @@ public class CartPresenter implements CallbackProductMode {
 
     @Override
     public void getListCartSuccess(List<Items> listItems) {
+        mList.clear();
         mList.addAll(listItems);
         cartView.DisplayListCartSuccess(mList);
         cartView.DisplaytotlalPrice(ToltalPrice(listItems));
