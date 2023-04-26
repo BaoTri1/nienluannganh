@@ -12,7 +12,7 @@ public interface DetailProductView {
     void DisplayInforProduct(Product product);
     void DisplayImagesProduct(List<Photo> list);
     void DisplayReviews(float rate, int numRviews, List<Review> reviews);
-    void DisplayListProduct(List<Product> mList);
+    void DisplayListProduct(List<Product> mList, List<String> listId);
     void DisplayBadge(int number);
     void DisplayNoNetWork(String message);
     void DisplayError(String message);

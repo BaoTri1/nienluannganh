@@ -7,11 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -35,6 +38,7 @@ import com.example.shopproject.view.FavoriteProductView;
 import com.example.shopproject.view.UI.DetailProductActivity;
 import com.example.shopproject.view.UI.Fragment.callback.CallbackFragment;
 import com.example.shopproject.view.UI.LoginActivity;
+import com.example.shopproject.view.UI.MainActivity;
 import com.example.shopproject.view.adapter.FavoriteProductAdapter;
 import com.example.shopproject.view.adapter.ProductAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
@@ -53,6 +57,9 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
     private RecyclerView rcv_ListProductFavorite;
     private View myView;
     private RelativeLayout layout_main;
+    private LinearLayout layoutShopping;
+    private AppCompatButton btnGoHome;
+    private MainActivity mainActivity;
     private FavoriteProductPresenter favoriteProductPresenter;
 
     @SuppressLint("SetTextI18n")
@@ -63,17 +70,22 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
 
         initView();
         setupToolBar();
+        mainActivity = (MainActivity) getActivity();
 
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_gia));
 
         favoriteProductPresenter = new FavoriteProductPresenter(getActivity(), this);
+        favoriteProductPresenter.getUser();
         favoriteProductPresenter.getListFavoriteProduct();
 
         btnFilter.setOnClickListener(view -> {
             createPopupMenuFilter();
         });
 
+        btnGoHome.setOnClickListener(v -> {
+            mainActivity.GoHomeFragment();
+        });
 
         return myView;
     }
@@ -86,6 +98,8 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
         lblShopping = myView.findViewById(R.id.lblmuasam);
         layout_main = myView.findViewById(R.id.layout_main);
         rcv_ListProductFavorite = myView.findViewById(R.id.rcv_DSSP_YeuThich);
+        layoutShopping = myView.findViewById(R.id.layoutMuaSam);
+        btnGoHome = myView.findViewById(R.id.btnGoHome);
     }
 
     private void setupToolBar(){
@@ -126,8 +140,22 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("Tri", "onStart Favorite");
+        favoriteProductPresenter.setNumIcon();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("Tri", "onResume Favorite");
+        favoriteProductPresenter.RefreshData();
+    }
+
+    @Override
     public void onRefresh() {
-        favoriteProductPresenter.getListFavoriteProduct();
+        favoriteProductPresenter.RefreshData();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -139,31 +167,42 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
 
     @Override
     public void DisplayListFavoriteProduct(List<Product> mList) {
+        if(mList == null || mList.isEmpty()){
+            layoutShopping.setVisibility(View.VISIBLE);
+            layout_main.setVisibility(View.GONE);
+            return;
+        }
+        layoutShopping.setVisibility(View.GONE);
+        layout_main.setVisibility(View.VISIBLE);
         if(mList != null)
             txtNum.setText(mList.size() + " sản phẩm");
 
-        adapter = new FavoriteProductAdapter(mList, getActivity(), new clickListener(){
-            @Override
-            public void onClickDelete(Product product) {
-                favoriteProductPresenter.deleteProdut(product);
-            }
+        if(adapter == null){
+            adapter = new FavoriteProductAdapter(mList, getActivity(), new clickListener(){
+                @Override
+                public void onClickDelete(Product product) {
+                    favoriteProductPresenter.deleteProdut(product);
+                }
 
-            @Override
-            public void onClickDetailProduct(Product product) {
-                Intent intentDetailProduct = new Intent(getActivity(), DetailProductActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("slug", product.getSlug());
-                intentDetailProduct.putExtras(bundle);
-                startActivity(intentDetailProduct);
-            }
-        });
+                @Override
+                public void onClickDetailProduct(Product product) {
+                    Intent intentDetailProduct = new Intent(getActivity(), DetailProductActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("slug", product.getSlug());
+                    intentDetailProduct.putExtras(bundle);
+                    startActivity(intentDetailProduct);
+                }
+            });
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        rcv_ListProductFavorite.setLayoutManager(manager);
-        rcv_ListProductFavorite.setAdapter(adapter);
-        rcv_ListProductFavorite.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        rcv_ListProductFavorite.setHasFixedSize(true);
-
+            LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+            rcv_ListProductFavorite.setLayoutManager(manager);
+            rcv_ListProductFavorite.setAdapter(adapter);
+            rcv_ListProductFavorite.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+            rcv_ListProductFavorite.setHasFixedSize(true);
+        }
+        else {
+            adapter.setData(mList);
+        }
     }
 
     @Override
@@ -180,6 +219,11 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
     public void DisplayisListEmpty() {
         layout_main.setVisibility(View.GONE);
         lblShopping.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void DisplayNumIcon(int number) {
+        mainActivity.setIconforItemBottomNavigation(1, number);
     }
 
     @Override

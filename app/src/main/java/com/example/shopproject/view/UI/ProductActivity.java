@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -82,6 +83,8 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                                 + "order: " + order);
 
         productSearchPresenter = new ProductSearchPresenter(this, this);
+        productSearchPresenter.getUser();
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -101,7 +104,18 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
             if(type.equals("Category")){
                 query = "all";
                 category = keywork;
-                productSearchPresenter.SearchProductsByCategory(keywork);
+                //productSearchPresenter.SearchProductsByCategory(keywork);
+                ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setMessage("Đang tải dữ liệu...");
+                dialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        productSearchPresenter.SearchProductsByCategory(keywork);
+                        dialog.dismiss();
+                    }
+                }, 2000);
             }
             else if(type.equals("Query")){
                 productSearchPresenter.SearchProductByQuery(keywork);
@@ -238,15 +252,44 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         }, 3000);
     }
 
+//    @Override
+//    public void DisplayListProduct(List<Product> listProduct) {
+//        if(listProduct.isEmpty()){
+//            lblNotProduct.setVisibility(View.VISIBLE);
+//            rcv_product.setVisibility(View.GONE);
+//            return;
+//        }
+//        if(adapterProduct == null){
+//            adapterProduct = new ProductAdapter(this, listProduct, new clickListener() {
+//                @Override
+//                public void onClickDetailProduct(Product product) {
+//                    Intent intentDetailProduct = new Intent(ProductActivity.this, DetailProductActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("slug", product.getSlug());
+//                    intentDetailProduct.putExtras(bundle);
+//                    startActivity(intentDetailProduct);
+//                    ProductActivity.this.finish();
+//                }
+//            });
+//            GridLayoutManager manager = new GridLayoutManager(this, 2);
+//            rcv_product.setLayoutManager(manager);
+//            rcv_product.addItemDecoration(new CharacterItemDecoration(20));
+//            rcv_product.setHasFixedSize(true);
+//            rcv_product.setAdapter(adapterProduct);
+//        }else {
+//            adapterProduct.setData(listProduct);
+//        }
+//    }
+
     @Override
-    public void DisplayListProduct(List<Product> listProduct) {
+    public void DisplayListProduct(List<Product> listProduct, List<String> listID) {
         if(listProduct.isEmpty()){
             lblNotProduct.setVisibility(View.VISIBLE);
             rcv_product.setVisibility(View.GONE);
             return;
         }
         if(adapterProduct == null){
-            adapterProduct = new ProductAdapter(this, listProduct, new clickListener() {
+            adapterProduct = new ProductAdapter(this, listProduct, listID, new clickListener() {
                 @Override
                 public void onClickDetailProduct(Product product) {
                     Intent intentDetailProduct = new Intent(ProductActivity.this, DetailProductActivity.class);
@@ -256,6 +299,11 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                     startActivity(intentDetailProduct);
                     ProductActivity.this.finish();
                 }
+
+                @Override
+                public void onClickLike(Product product) {
+                    productSearchPresenter.addFavoriteProduct(product.get_id());
+                }
             });
             GridLayoutManager manager = new GridLayoutManager(this, 2);
             rcv_product.setLayoutManager(manager);
@@ -263,7 +311,7 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
             rcv_product.setHasFixedSize(true);
             rcv_product.setAdapter(adapterProduct);
         }else {
-            adapterProduct.setData(listProduct);
+            adapterProduct.setData(listProduct, listID);
         }
     }
 

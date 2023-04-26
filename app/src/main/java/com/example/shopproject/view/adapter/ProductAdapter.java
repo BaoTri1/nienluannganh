@@ -26,8 +26,16 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
 
     private List<Product> mList;
+    private List<String> listID;
     private clickListener listener;
     private Context mContext;
+
+    public ProductAdapter(Context mContext, List<Product> mList, List<String> listID, clickListener listener) {
+        this.mList = mList;
+        this.listID = listID;
+        this.listener = listener;
+        this.mContext = mContext;
+    }
 
     public ProductAdapter(Context mContext, List<Product> mList, clickListener listener) {
         this.mList = mList;
@@ -37,6 +45,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public void setData(List<Product> mList){
         this.mList = mList;
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<Product> mList, List<String> listID){
+        this.mList = mList;
+        this.listID = listID;
         notifyDataSetChanged();
     }
 
@@ -52,6 +66,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = mList.get(position);
         if(product == null)
             return;
+
+        for(int i = 0; i < listID.size(); i++){
+            if(product.get_id().equals(listID.get(i))){
+                holder.btnLike.setChecked(true);
+            }
+        }
 
          Glide.with(mContext)
                  .load(product.getImage())

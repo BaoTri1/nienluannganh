@@ -8,7 +8,8 @@ import java.util.List;
 public interface HomeView {
     void DisplayBanner(List<Photo> listPhoto);
     void DisplayCatalog(List<String> listCatalog);
-    void DisplayListProduct(List<Product> listProduct);
+    void DisplayListProduct(List<Product> listProduct, List<String> listId);
+    void DisplayNumIcon(int number);
     void DisplayNoNetWork(String message);
     void DisplayError(String message);
 }

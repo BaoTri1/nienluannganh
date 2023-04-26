@@ -1,30 +1,25 @@
 package com.example.shopproject.callbackAPI;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.example.shopproject.mode.Items;
+import com.example.shopproject.mode.FavoriteRequest;
+import com.example.shopproject.mode.FavoriteResponse;
 import com.example.shopproject.mode.LoginRequest;
 import com.example.shopproject.mode.OrderRequest;
 import com.example.shopproject.mode.Orders;
 import com.example.shopproject.mode.Product;
+import com.example.shopproject.mode.favorites;
 import com.example.shopproject.mode.RegisterRequest;
 import com.example.shopproject.mode.SearchResponse;
-import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.mode.User;
 import com.example.shopproject.mode.orderResponse;
 import com.example.shopproject.mode.reviewRequest;
 import com.example.shopproject.mode.reviewResponse;
-import com.example.shopproject.orther_handle.Publics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -32,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -65,7 +59,7 @@ public interface APIService {
             .addInterceptor(loggingInterceptor);
 
     APIService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.161:5000/")
+            .baseUrl("http://192.168.50.161:5000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okBuilder.build())
             .build()
@@ -113,6 +107,9 @@ public interface APIService {
 
     @GET("/api/orders/mine")
     Call<List<Orders>> getListOrderHistory(@Header("authorization") String header);
+
+    @POST("/api/users/favorite/")
+    Call<FavoriteResponse> postFavariteProduct(@Header("authorization") String header, @Body FavoriteRequest favoriteResponse);
 
 }
 

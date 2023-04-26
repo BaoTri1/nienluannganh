@@ -10,6 +10,7 @@ public interface ProductRepository {
     void getListProducts();
     void getListCatalogs();
     void getProduct(String slug);
+    void getProductById(String id);
     void getListFavoriteProducts();
     void getCountSize(String slug, int indexColor, int indexSize);
     void getCountColor(String slug, int indexColor);
@@ -21,4 +22,5 @@ public interface ProductRepository {
     void PostOrders(List<Items> items, ShippingAddress shippingAddress, String paymentMethod, int toltalPriceProcuct, int shippingPrice, int taxPrice, int toltalPayment);
     void PostReview(String comment, int rating, String name, String id);
     void getListOrdersHistory();
+    void postFavoriteProduct(String id, String idProduct);
 }

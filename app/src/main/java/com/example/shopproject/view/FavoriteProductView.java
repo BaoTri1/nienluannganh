@@ -9,6 +9,7 @@ public interface FavoriteProductView {
     void DisplaySortList(List<Product> mList);
     void DisplayChangeList(List<Product> mList);
     void DisplayisListEmpty();
+    void DisplayNumIcon(int number);
     void DisplayNoNetWork(String message);
     void DisplayError(String message);
 }

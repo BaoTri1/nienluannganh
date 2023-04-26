@@ -44,6 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         Log.e("Tri", user.getToken());
                         Publics.SaveToken(SplashScreenActivity.this, user.getToken());
                         Log.e("Tri", "Token da luu: " + Publics.GetToken(SplashScreenActivity.this));
+                        AccountManagement.setFalseLoginState(SplashScreenActivity.this, account.getEmail(), true);
                     }else {
                         message = "Đã xảy ra lỗi khi đăng nhập";
                         AccountManagement.setFalseLoginState(SplashScreenActivity.this, account.getEmail(), false);

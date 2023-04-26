@@ -114,6 +114,7 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         setOnRefreshData();
 
         detailProductPresenter = new DetailProductPresenter(this, this);
+        detailProductPresenter.getUser();
 
         //Receive Data from HomeFragment
         slug = getIntent().getExtras().getString("slug", "");
@@ -121,7 +122,24 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         getInforProduct(slug);
 
         //Create ListProduct
-        detailProductPresenter.createListProduct();
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Đang tải dữ liệu...");
+        dialog.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                List<String> list = detailProductPresenter.getListIdProductFavorite();
+                for (int i = 0; i < list.size(); i++){
+                    if(product.get_id().equals(list.get(i))){
+                        btnLike.setChecked(true);
+                    }
+                }
+                detailProductPresenter.createListProduct();
+                dialog.dismiss();
+            }
+        }, 2000);
+//        detailProductPresenter.createListProduct();
 
         btnSearch.setOnClickListener(view -> {
             Intent intent = new Intent(DetailProductActivity.this, SearchActivity.class);
@@ -131,6 +149,7 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         btnLike.setOnClickListener(view -> {
             if(btnLike.isChecked()){
                 Toast.makeText(DetailProductActivity.this, "Đã like", Toast.LENGTH_SHORT).show();
+                detailProductPresenter.addFavoriteProduct(this.product.get_id());
             }
             else {
                 Toast.makeText(DetailProductActivity.this, "Đã unlike", Toast.LENGTH_SHORT).show();
@@ -328,6 +347,7 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
     public void onRefresh() {
         Toast.makeText(this, "Refresh Data", Toast.LENGTH_SHORT).show();
         getInforProduct(slug);
+        detailProductPresenter.createListProduct();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -340,6 +360,7 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
     @Override
     public void DisplayInforProduct(Product product) {
         this.product = product;
+        Log.e("Tri1","detail: " + this.product.getName());
         txtNameProduct.setText(product.getName());
         txtPriceProduct.setText(Publics.formatGia(product.getPrice()));
         txtDescribe.setText(product.getDescription());
@@ -375,10 +396,9 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
         rcv_Review.setHasFixedSize(true);
     }
 
-
     @Override
-    public void DisplayListProduct(List<Product> mList) {
-        ProductAdapter adapter = new ProductAdapter(this, mList, new clickListener() {
+    public void DisplayListProduct(List<Product> mList, List<String> listId) {
+        ProductAdapter adapter = new ProductAdapter(this, mList, listId, new clickListener() {
             @Override
             public void onClickDetailProduct(Product product) {
                 Intent intentDetailProduct = new Intent(DetailProductActivity.this, DetailProductActivity.class);
@@ -386,6 +406,11 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
                 bundle.putString("slug", product.getSlug());
                 intentDetailProduct.putExtras(bundle);
                 startActivity(intentDetailProduct);
+            }
+
+            @Override
+            public void onClickLike(Product product) {
+                detailProductPresenter.addFavoriteProduct(product.get_id());
             }
         });
         GridLayoutManager manager = new GridLayoutManager(this, 2);

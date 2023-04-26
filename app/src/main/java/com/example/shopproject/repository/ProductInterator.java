@@ -5,13 +5,15 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
-import com.example.shopproject.R;
 import com.example.shopproject.callbackAPI.APIService;
+import com.example.shopproject.mode.FavoriteRequest;
+import com.example.shopproject.mode.FavoriteResponse;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.OrderRequest;
 import com.example.shopproject.mode.Orders;
 import com.example.shopproject.mode.Photo;
 import com.example.shopproject.mode.Product;
+import com.example.shopproject.mode.favorites;
 import com.example.shopproject.mode.SearchResponse;
 import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.mode.orderResponse;
@@ -44,7 +46,7 @@ public class ProductInterator implements ProductRepository{
     @Override
     public void getListProducts() {
         progressDialog.show();
-        progressDialog.setMessage("Đang tải dữ liệu...");
+        progressDialog.setMessage("Đang tải dữ liệu sản phẩm...");
         APIService.apiService.getListProducts().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -57,7 +59,7 @@ public class ProductInterator implements ProductRepository{
                         public void run() {
                             progressDialog.dismiss();
                         }
-                    }, 1000);
+                    }, 500);
                 }
                 else {
                     callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
@@ -118,6 +120,27 @@ public class ProductInterator implements ProductRepository{
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
                 callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+            }
+        });
+    }
+
+    @Override
+    public void getProductById(String id) {
+        APIService.apiService.getProductById(id).enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                if(response.isSuccessful()){
+                    Product result = response.body();
+                    callbackProductMode.getProductSuccessById(result);
+                }
+                else {
+                    callbackProductMode.getDataFailure("Không tìm thấy sản phẩm.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi. Gọi thất bại.");
             }
         });
     }
@@ -356,6 +379,28 @@ public class ProductInterator implements ProductRepository{
             @Override
             public void onFailure(Call<List<Orders>> call, Throwable t) {
                 callbackProductMode.getDataFailure("Đã xảy ra lỗi. Lấy dữ liệu thất bại");
+            }
+        });
+    }
+
+    @Override
+    public void postFavoriteProduct(String id, String idProduct) {
+        FavoriteRequest request = new FavoriteRequest(id, idProduct);
+        APIService.apiService.postFavariteProduct(Publics.GetToken(mContext), request).enqueue(new Callback<FavoriteResponse>() {
+            @Override
+            public void onResponse(Call<FavoriteResponse> call, Response<FavoriteResponse> response) {
+                if(response.isSuccessful()){
+                    FavoriteResponse result = response.body();
+                    callbackProductMode.postFavoriteProductSuccess(result);
+                }
+                else {
+                    callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoriteResponse> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi. Thêm thất bại");
             }
         });
     }

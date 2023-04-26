@@ -1,7 +1,6 @@
 package com.example.shopproject.view.UI.Fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -31,7 +29,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.shopproject.R;
-import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.Photo;
 import com.example.shopproject.mode.Product;
 import com.example.shopproject.orther_handle.CharacterItemDecoration;
@@ -47,8 +44,6 @@ import com.example.shopproject.view.adapter.PhotoAdapter;
 import com.example.shopproject.view.adapter.ProductAdapter;
 import com.example.shopproject.view.adapter.interfaceListenerAdapter.clickListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.badge.BadgeUtils;
 
 import java.util.List;
 import java.util.Timer;
@@ -77,8 +72,9 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
 
     private MainActivity mainActivity;
 
-    private static final int ADD_CART_SUCCESS = 1;
-    private static final int OPEN_CART = 2;
+    private boolean like;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +83,7 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
         myView = inflater.inflate(R.layout.fragment_home_layout, container, false);
         initView();
         homePresenter = new HomePresenter(getContext(), this);
+        homePresenter.getUser();
         setToolbar();
 
         //set RefreshDataListener
@@ -99,13 +96,25 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
         homePresenter.createListCatalog();
 
         //Create list Products
-        homePresenter.createListProducts();
+        //homePresenter.createListProducts();
+        ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Đang tải dữ liệu...");
+        dialog.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                homePresenter.createListProducts();
+                dialog.dismiss();
+            }
+        }, 2000);
 
         btnSearch.setOnClickListener(view -> {
             Intent intentSearch = new Intent(getActivity(), SearchActivity.class);
             startActivity(intentSearch);
          });
         mainActivity = (MainActivity) getActivity();
+
 
         return myView;
     }
@@ -239,8 +248,8 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
     }
 
     @Override
-    public void DisplayListProduct(List<Product> listProduct) {
-        productAdapter = new ProductAdapter(getContext(), listProduct, new clickListener() {
+    public void DisplayListProduct(List<Product> listProduct, List<String> listId) {
+        productAdapter = new ProductAdapter(getContext(), listProduct, listId, new clickListener() {
             @Override
             public void onClickDetailProduct(Product product) {
                 Intent intentDetailProduct = new Intent(getActivity(), DetailProductActivity.class);
@@ -254,7 +263,7 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
 
             @Override
             public void onClickLike(Product product) {
-                Toast.makeText(getContext(), "Đã Like", Toast.LENGTH_SHORT).show();
+                homePresenter.addFavoriteProduct(product.get_id());
             }
         });
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
@@ -262,7 +271,11 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
         rcv_product.setHasFixedSize(true);
         rcv_product.addItemDecoration(new CharacterItemDecoration(20));
         rcv_product.setAdapter(productAdapter);
+    }
 
+    @Override
+    public void DisplayNumIcon(int number) {
+        mainActivity.setIconforItemBottomNavigation(1, number);
     }
 
     @Override
