@@ -1,5 +1,6 @@
 package com.example.shopproject.callbackAPI;
 
+import com.example.shopproject.mode.Discount;
 import com.example.shopproject.mode.FavoriteRequest;
 import com.example.shopproject.mode.FavoriteResponse;
 import com.example.shopproject.mode.LoginRequest;
@@ -110,6 +111,9 @@ public interface APIService {
 
     @POST("/api/users/favorite/")
     Call<FavoriteResponse> postFavariteProduct(@Header("authorization") String header, @Body FavoriteRequest favoriteResponse);
+
+    @GET("/api/discount/")
+    Call<List<Discount>> getListDiscount();
 
 }
 

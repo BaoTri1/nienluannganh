@@ -105,18 +105,18 @@ public class FavoriteProductFragment extends Fragment implements SwipeRefreshLay
     private void setupToolBar(){
         if(toolbar != null){
             toolbar.setTitle("Sản phẩm yêu thích");
-            toolbar.inflateMenu(R.menu.contextmenu_home_fragment);
-            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.action_thongbao:
-                            Toast.makeText(getActivity(), "Thông Báo", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                    return true;
-                }
-            });
+//            toolbar.inflateMenu(R.menu.contextmenu_home_fragment);
+//            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    switch (item.getItemId()){
+//                        case R.id.action_thongbao:
+//                            Toast.makeText(getActivity(), "Thông Báo", Toast.LENGTH_SHORT).show();
+//                            break;
+//                    }
+//                    return true;
+//                }
+//            });
         }
     }
 

@@ -30,6 +30,7 @@ import com.example.shopproject.view.ProfileView;
 import com.example.shopproject.view.UI.DetailProfile_Activity;
 import com.example.shopproject.view.UI.IntroActivity;
 import com.example.shopproject.view.UI.ListAddressActicity;
+import com.example.shopproject.view.UI.ListDiscountActivity;
 import com.example.shopproject.view.UI.ListOrdersHistory;
 import com.example.shopproject.view.UI.LoginActivity;
 import com.example.shopproject.view.UI.MainActivity;
@@ -109,6 +110,11 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         btnMoGioiThieu.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), IntroActivity.class);
+            startActivity(intent);
+        });
+
+        btnMoCaiDatThongBao.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListDiscountActivity.class);
             startActivity(intent);
         });
 

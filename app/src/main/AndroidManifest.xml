@@ -5,18 +5,23 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name=".orther_handle.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_app"
-        android:roundIcon="@mipmap/ic_app_round"
+        android:icon="@mipmap/logo_app_shop"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/logo_app_shop"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShopProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.UI.ListDiscountActivity"
+            android:exported="false" />
         <activity
             android:name=".view.UI.IntroActivity"
             android:exported="true"
@@ -36,7 +41,7 @@
         <activity
             android:name=".view.UI.ListAddressActicity"
             android:exported="true"
-            android:parentActivityName=".view.UI.MainActivity">
+            android:parentActivityName=".view.UI.PayMentActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -60,7 +65,7 @@
         <activity
             android:name=".view.UI.EditAddressActivity"
             android:exported="true"
-            android:parentActivityName=".view.UI.PayMentActivity">
+            android:parentActivityName=".view.UI.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

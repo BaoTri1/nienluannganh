@@ -255,6 +255,65 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layoutDiscount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/lblDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/baseline_discount_24"
+                    android:drawablePadding="10dp"
+                    android:padding="5dp"
+                    android:text="Mã giảm giá"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/txtDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblDiscount"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:padding="5dp"
+                    android:visibility="invisible"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/lblmemo_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:padding="5dp"
+                    android:text="Chọn mã giảm giá."
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSelectDiscount"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_baseline_navigate_next_24"
+                    android:paddingEnd="15dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/layoutDetailOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -328,10 +387,38 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/lblToltalPayment"
+                    android:id="@+id/lbltoltalDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblToltalShipping"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:padding="5dp"
+                    android:text="Tổng tiền giảm"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/txttoltalDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtToltalShipping"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:drawablePadding="10dp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textColor="@color/color_gia"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblToltalPayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lbltoltalDiscount"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:drawablePadding="10dp"
@@ -345,7 +432,7 @@
                     android:id="@+id/txtToltalPayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtToltalShipping"
+                    android:layout_below="@+id/txttoltalDiscount"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"

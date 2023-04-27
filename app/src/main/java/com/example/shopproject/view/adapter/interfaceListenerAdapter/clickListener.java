@@ -1,6 +1,7 @@
 package com.example.shopproject.view.adapter.interfaceListenerAdapter;
 
 import com.example.shopproject.mode.Color;
+import com.example.shopproject.mode.Discount;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.Orders;
 import com.example.shopproject.mode.Product;
@@ -29,4 +30,6 @@ public interface clickListener {
     default void onClickDetailOrders(Orders orders){};
 
     default void onClickAddress(Address address){};
+
+    default void onClickDiscount(Discount discount){};
 }

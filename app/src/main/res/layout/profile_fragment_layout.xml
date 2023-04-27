@@ -150,12 +150,12 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/custom_bg_btn_hoso"
-                android:drawableStart="@drawable/ic_baseline_notifications_24"
+                android:drawableStart="@drawable/baseline_discount_24"
                 android:drawableEnd="@drawable/ic_baseline_navigate_next_24"
                 android:drawablePadding="8dp"
                 android:elevation="10dp"
                 android:padding="10dp"
-                android:text="@string/thong_bao"
+                android:text="Mã giảm giá"
                 android:textAllCaps="false"
                 android:textAlignment="textStart"/>
 

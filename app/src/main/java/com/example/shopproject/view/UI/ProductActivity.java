@@ -223,10 +223,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.action_thongbao_detail:
-                Toast.makeText(ProductActivity.this, "Thong bao", Toast.LENGTH_SHORT).show();
-                break;
-
             case R.id.action_giohang_detail:
                 backAction("OPENCART");
                 Toast.makeText(ProductActivity.this, "Gio hang", Toast.LENGTH_SHORT).show();
@@ -260,34 +256,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         }, 3000);
     }
 
-//    @Override
-//    public void DisplayListProduct(List<Product> listProduct) {
-//        if(listProduct.isEmpty()){
-//            lblNotProduct.setVisibility(View.VISIBLE);
-//            rcv_product.setVisibility(View.GONE);
-//            return;
-//        }
-//        if(adapterProduct == null){
-//            adapterProduct = new ProductAdapter(this, listProduct, new clickListener() {
-//                @Override
-//                public void onClickDetailProduct(Product product) {
-//                    Intent intentDetailProduct = new Intent(ProductActivity.this, DetailProductActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("slug", product.getSlug());
-//                    intentDetailProduct.putExtras(bundle);
-//                    startActivity(intentDetailProduct);
-//                    ProductActivity.this.finish();
-//                }
-//            });
-//            GridLayoutManager manager = new GridLayoutManager(this, 2);
-//            rcv_product.setLayoutManager(manager);
-//            rcv_product.addItemDecoration(new CharacterItemDecoration(20));
-//            rcv_product.setHasFixedSize(true);
-//            rcv_product.setAdapter(adapterProduct);
-//        }else {
-//            adapterProduct.setData(listProduct);
-//        }
-//    }
 
     @Override
     public void DisplayListProduct(List<Product> listProduct, List<String> listID) {
@@ -384,5 +352,10 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         });
         dialogNetWork.setMessage(message);
         dialogNetWork.create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        backAction("");
     }
 }

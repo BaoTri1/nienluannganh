@@ -17,15 +17,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shopproject.R;
+import com.example.shopproject.mode.Discount;
 import com.example.shopproject.mode.Items;
 import com.example.shopproject.mode.ShippingAddress;
 import com.example.shopproject.mode.ShippingMethod;
@@ -46,9 +53,10 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
 
     private static final int SHIPPING_ADDRESS_REQUEST = 1;
     private static final int SHIPPING_ADDRESS_SELECT = 2;
+    private static final int DISCOUNT_SELECT = 3;
+    private static final String DISCOUNT_KEY = "discount_key";
     private static final String SHIPPING_ADDRESS_KEY = "shipping_address_key";
     private static final String LIST_ITEMS_KEY = "list_items_key";
-
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private NestedScrollView nestedScrollView;
@@ -65,12 +73,15 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
     private TextView txtPayment;
     private TextView lblmemo_Payment;
     private AppCompatButton btnSelectPayment;
+    private EditText txtDiscount;
+    private TextView lblmemo_discount;
+    private AppCompatButton btnSelectDiscount;
     private TextView txtToltalProduct;
     private TextView txtToltalShipping;
+    private TextView txtToltalDiscount;
     private TextView txtToltalPayment;
     private TextView txt_ToltalPayment;
     private AppCompatButton btnOrder;
-
     private PaymentPresenter paymentPresenter;
 
     @Override
@@ -142,16 +153,53 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
 
         });
 
+        btnSelectDiscount.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ListDiscountActivity.class);
+            startActivityForResult(intent, DISCOUNT_SELECT);
+        });
+
+        txtDiscount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    paymentPresenter.NoDiscount();
+                    txtDiscount.setVisibility(View.INVISIBLE);
+                    btnSelectDiscount.setVisibility(View.VISIBLE);
+                    lblmemo_discount.setVisibility(View.VISIBLE);
+                    hideSoftKeyboard();
+                }
+            }
+        });
+
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Bundle bundle = data.getExtras();
         if(resultCode == Activity.RESULT_OK && requestCode == SHIPPING_ADDRESS_REQUEST || requestCode == SHIPPING_ADDRESS_SELECT) {
-            Bundle bundle = data.getExtras();
             if (bundle != null) {
                 paymentPresenter.ReceiveShippingAddress((ShippingAddress) bundle.getSerializable(SHIPPING_ADDRESS_KEY));
+            }
+        }else if(resultCode == Activity.RESULT_OK && requestCode == DISCOUNT_SELECT){
+            if(bundle != null){
+                Discount discount = (Discount) bundle.getSerializable(DISCOUNT_KEY);
+                txtDiscount.setText(discount.getCode());
+                paymentPresenter.ToltalPaymentDiscount(discount.getDiscountPercentage());
+                lblmemo_discount.setVisibility(View.GONE);
+                btnSelectDiscount.setVisibility(View.GONE);
+                txtDiscount.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -172,11 +220,20 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
         txtPayment = findViewById(R.id.txtPayment);
         lblmemo_Payment = findViewById(R.id.lblmemo_payment);
         btnSelectPayment = findViewById(R.id.btnSelectPayment);
+        txtDiscount = findViewById(R.id.txtDiscount);
+        lblmemo_discount = findViewById(R.id.lblmemo_discount);
+        btnSelectDiscount = findViewById(R.id.btnSelectDiscount);
         txtToltalProduct = findViewById(R.id.txtToltalProduct);
         txtToltalShipping = findViewById(R.id.txtToltalShipping);
+        txtToltalDiscount = findViewById(R.id.txttoltalDiscount);
         txtToltalPayment = findViewById(R.id.txtToltalPayment);
         txt_ToltalPayment = findViewById(R.id.txt_ToltalPayment);
         btnOrder = findViewById(R.id.btnOrder);
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     private void DisplayMessage(String mesage, int layoutid, int idImg){
@@ -228,6 +285,11 @@ public class PayMentActivity extends AppCompatActivity implements PayMentView, C
     public void DisplayToltalPayment(String toltalPricePayment) {
         txtToltalPayment.setText(toltalPricePayment);
         txt_ToltalPayment.setText(toltalPricePayment);
+    }
+
+    @Override
+    public void DisplayToltalDiscount(String toltalPriceDiscount) {
+        txtToltalDiscount.setText(toltalPriceDiscount);
     }
 
     @Override

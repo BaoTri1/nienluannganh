@@ -300,18 +300,12 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.action_thongbao_detail:
-                Toast.makeText(DetailProductActivity.this, "Thong bao", Toast.LENGTH_SHORT).show();
-                break;
-
             case R.id.action_giohang_detail:
                 backAction("OPENCART");
-                Toast.makeText(DetailProductActivity.this, "Gio hang", Toast.LENGTH_SHORT).show();
                 break;
 
             case android.R.id.home:
                 backAction("");
-                Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
@@ -485,5 +479,10 @@ public class DetailProductActivity extends AppCompatActivity implements SwipeRef
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        backAction("");
     }
 }

@@ -141,15 +141,15 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
         }
 
         //Set ContextMenu on Toolbar
-        toolbar.inflateMenu(R.menu.contextmenu_home_fragment);
-        toolbar.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()){
-                case R.id.action_thongbao:
-                    Toast.makeText(getContext(), "Thong bao", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            return true;
-        });
+//        toolbar.inflateMenu(R.menu.contextmenu_home_fragment);
+//        toolbar.setOnMenuItemClickListener(item -> {
+//            switch (item.getItemId()){
+//                case R.id.action_thongbao:
+//                    Toast.makeText(getContext(), "Thong bao", Toast.LENGTH_SHORT).show();
+//                    break;
+//            }
+//            return true;
+//        });
     }
 
     public void setOnRefreshData() {
@@ -176,7 +176,6 @@ public class HomeFragment extends Fragment implements HomeView, SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-        Toast.makeText(getContext(), "RefreshData", Toast.LENGTH_SHORT).show();
         //Create Banner
         homePresenter.createBanner();
 

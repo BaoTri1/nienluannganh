@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.example.shopproject.callbackAPI.APIService;
+import com.example.shopproject.mode.Discount;
 import com.example.shopproject.mode.FavoriteRequest;
 import com.example.shopproject.mode.FavoriteResponse;
 import com.example.shopproject.mode.Items;
@@ -401,6 +402,26 @@ public class ProductInterator implements ProductRepository{
             @Override
             public void onFailure(Call<FavoriteResponse> call, Throwable t) {
                 callbackProductMode.getDataFailure("Đã xảy ra lỗi. Thêm thất bại");
+            }
+        });
+    }
+
+    @Override
+    public void getListDiscount() {
+        APIService.apiService.getListDiscount().enqueue(new Callback<List<Discount>>() {
+            @Override
+            public void onResponse(Call<List<Discount>> call, Response<List<Discount>> response) {
+                if(response.isSuccessful()){
+                    List<Discount> result = response.body();
+                    callbackProductMode.getListDiscountSuccess(result);
+                }else {
+                    callbackProductMode.getDataFailure("Đã xảy ra lỗi.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Discount>> call, Throwable t) {
+                callbackProductMode.getDataFailure("Đã xảy ra lỗi. Lấy thất bại");
             }
         });
     }

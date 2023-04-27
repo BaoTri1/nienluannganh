@@ -46,6 +46,8 @@ public class PaymentPresenter implements CallbackPayment, CallbackProductMode {
     private int totalPrice;
     private int priceShippingMethod;
     private int toltalPayment;
+    private int toltalDiscount;
+    private boolean isDiscount;
     private String nameMethodPayment;
     private boolean islistCart;
 
@@ -57,6 +59,7 @@ public class PaymentPresenter implements CallbackPayment, CallbackProductMode {
         this.payMentView = payMentView;
         payment = new Payment(mContext, this);
         this.productInterator = new ProductInterator(mContext, this);
+        isDiscount = false;
     }
 
     public void ReceiveShippingAddress(ShippingAddress shippingAddress){
@@ -85,7 +88,23 @@ public class PaymentPresenter implements CallbackPayment, CallbackProductMode {
         payMentView.DisplayToltalPayment(Publics.formatGia(this.toltalPayment));
     }
 
+    public void ToltalPaymentDiscount(int discount){
+        isDiscount = true;
+        toltalDiscount = this.toltalPayment - ((this.toltalPayment * discount) / 100);
+        payMentView.DisplayToltalDiscount("-" + Publics.formatGia((this.toltalPayment * discount) / 100));
+        payMentView.DisplayToltalPayment(Publics.formatGia(this.toltalDiscount));
+    }
+
+    public void NoDiscount(){
+        this.isDiscount = false;
+        payMentView.DisplayToltalPayment(Publics.formatGia(this.toltalPayment));
+        payMentView.DisplayToltalDiscount("");
+    }
+
     public void makePayments(String methodPayment){
+        if(isDiscount){
+            toltalPayment = toltalDiscount;
+        }
         if(methodPayment.equals(Publics.PAYMENT_NOMAL)){
             this.nameMethodPayment = Publics.PAYMENT_NOMAL;
             if(Publics.isNetWorkAvaliable(mContext)){
