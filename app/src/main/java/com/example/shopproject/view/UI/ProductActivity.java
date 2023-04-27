@@ -96,6 +96,9 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_gia));
 
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Đang tải dữ liệu...");
+        dialog.show();
         Bundle bundleReceiver = getIntent().getExtras();
         if(bundleReceiver != null) {
             String type = bundleReceiver.getString("TYPE_KEY");
@@ -105,9 +108,6 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                 query = "all";
                 category = keywork;
                 //productSearchPresenter.SearchProductsByCategory(keywork);
-                ProgressDialog dialog = new ProgressDialog(this);
-                dialog.setMessage("Đang tải dữ liệu...");
-                dialog.show();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -118,7 +118,15 @@ public class ProductActivity extends AppCompatActivity implements SwipeRefreshLa
                 }, 2000);
             }
             else if(type.equals("Query")){
-                productSearchPresenter.SearchProductByQuery(keywork);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        productSearchPresenter.SearchProductByQuery(keywork);
+                        dialog.dismiss();
+                    }
+                }, 2000);
+                //productSearchPresenter.SearchProductByQuery(keywork);
                 query = keywork;
                 Log.e("Tri", "category: " + category + "\n"
                         + "query: " + query + "\n"
